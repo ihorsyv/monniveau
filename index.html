@@ -111,9 +111,23 @@
   .ans-badge.correct { background: var(--correct-bg); color: var(--correct-border); }
   .ans-badge.wrong { background: var(--wrong-bg); color: var(--wrong-border); }
   .mistake-exp { font-size: 0.78rem; color: var(--muted); line-height: 1.5; border-top: 1px solid var(--border); padding-top: 6px; margin-top: 6px; }
-  .result-nav { display: flex; gap: 10px; justify-content: center; }
+  .result-nav { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
   .btn-restart { padding: 12px 32px; border-radius: 10px; background: var(--accent); color: white; border: none; font-size: 0.9rem; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.15s; }
   .btn-restart:hover { background: #1e3f36; }
+  .cert-hero { position: relative; }
+  .cert-seal { font-size: 2rem; margin-bottom: 0.4rem; }
+  .cert-date { font-size: 0.72rem; color: var(--muted); margin-top: 1rem; }
+  .picker-screen { animation: fadeUp 0.4s ease; }
+  .picker-intro { text-align: center; font-size: 0.85rem; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.6; max-width: 480px; margin-left: auto; margin-right: auto; }
+  .picker-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 0.75rem; }
+  .picker-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.1rem 1.3rem; display: flex; align-items: center; gap: 1rem; animation: fadeUp 0.4s ease; }
+  .picker-level { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--accent); font-weight: 600; min-width: 44px; }
+  .picker-info { flex: 1; }
+  .picker-result { font-size: 0.85rem; color: var(--text); font-weight: 500; }
+  .picker-result-empty { color: var(--muted); font-weight: 400; }
+  .picker-card .btn-primary { width: auto; padding: 10px 18px; flex: none; }
+  .picker-reset { text-align: center; margin-top: 0.75rem; }
+  .link-reset { background: none; border: none; color: var(--muted); font-size: 0.78rem; text-decoration: underline; cursor: pointer; font-family: 'DM Sans', sans-serif; padding: 6px; }
   .add-hint { text-align: center; font-size: 0.72rem; color: var(--muted); margin-top: 1.5rem; line-height: 1.6; }
   @keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
@@ -132,7 +146,7 @@
   <div class="header">
     <div class="header-flag">🇫🇷</div>
     <h1>Тест на уровень французского</h1>
-    <p>Адаптивный тест A1 → A2 → B1 · с переводом и произношением</p>
+    <p>Уровни A1 · A2 · B1 · с переводом, произношением и сертификатом за каждый блок</p>
   </div>
   <div class="level-track" id="levelTrack"></div>
   <div id="app"></div>
@@ -188,7 +202,7 @@ const BLOCKS = {
     { q: "Ils ___ partis très tôt ce matin.", o: ["ont","avons","sont","être"], a: 2, t: "Passé composé", e: "Partir — движение → être.", tr: "Они уехали очень рано этим утром." },
     { q: "Elle ___ sorti la poubelle. (= вынесла мусор)", o: ["est","a","soit","avait"], a: 1, t: "Passé composé", e: "Sortir с прямым дополнением → avoir.", tr: "Она вынесла мусор." },
     { q: "Je ___ tombé(e) dans l'escalier.", o: ["ai","avoir","suis","soit"], a: 2, t: "Passé composé", e: "Tomber — движение → être.", tr: "Я упал(а) на лестнице." },
-    { q: "Les lettres qu'il ___ écrit___ sont importantes.", o: ["a écrites","a écrit","est écrit","a écrits"], a: 0, t: "Accord du participe", e: "COD перед глаголом → согласование.", tr: "Письма, которые он написал, важны." },
+    { q: "Les lettres qu'il ___ sont importantes.", o: ["a écrites","a écrit","est écrit","a écrits"], a: 0, t: "Accord du participe", e: "COD перед глаголом → согласование.", tr: "Письма, которые он написал, важны." },
     { q: "Marie et Sophie sont ___ au marché.", o: ["allés","allé","allées","aller"], a: 2, t: "Accord du participe", e: "Обе женского рода → allées.", tr: "Мари и Софи пошли на рынок." },
     { q: "La robe qu'elle a ___ est magnifique.", o: ["acheté","achetée","achetés","achetées"], a: 1, t: "Accord du participe", e: "COD перед глаголом (ж.р.) → achetée.", tr: "Платье, которое она купила, великолепное." },
     { q: "Quand j'étais enfant, je ___ souvent à la mer.", o: ["suis allé","allais","suis allée","allé"], a: 1, t: "Imparfait", e: "Повторяющееся действие → imparfait.", tr: "Когда я был(а) ребёнком, я часто ездил(а) на море." },
@@ -214,7 +228,7 @@ const BLOCKS = {
     { q: "C'est l'acteur ___ joue dans ce film.", o: ["que","dont","qui","où"], a: 2, t: "Pronoms relatifs", e: "Qui — подлежащее.", tr: "Это актёр, который играет в этом фильме." },
     { q: "C'est la ville ___ je suis né(e).", o: ["que","qui","dont","où"], a: 3, t: "Pronoms relatifs", e: "Où — место.", tr: "Это город, где я родился/родилась." },
     { q: "C'est le film ___ tout le monde parle.", o: ["qui","que","où","dont"], a: 3, t: "Pronoms relatifs", e: "Parler de → dont.", tr: "Это фильм, о котором все говорят." },
-    { q: "Si j'avais le temps, je ___ voyager.", o: ["voyage","voyagerais","voyagerai","voyager"], a: 1, t: "Conditionnel présent", e: "Si + imparfait → conditionnel présent.", tr: "Если бы у меня было время, я бы путешествовал(а)." },
+    { q: "Si j'avais le temps, je ___.", o: ["voyage","voyagerais","voyagerai","voyager"], a: 1, t: "Conditionnel présent", e: "Si + imparfait → conditionnel présent.", tr: "Если бы у меня было время, я бы путешествовал(а)." },
     { q: "À ta place, je ___ ce médecin.", o: ["consulte","consulterais","consulterai","consultais"], a: 1, t: "Conditionnel présent", e: "«À ta place» → conditionnel.", tr: "На твоём месте я бы обратился(лась) к этому врачу." },
     { q: "Demain, nous ___ à Lyon.", o: ["allons","irons","allions","aller"], a: 1, t: "Futur simple", e: "Futur simple de aller: irons.", tr: "Завтра мы поедем в Лион." },
     { q: "Elle ___ son travail quand elle aura fini.", o: ["rend","rendra","rendrait","rendait"], a: 1, t: "Futur simple", e: "Обещание/факт в будущем → rendra.", tr: "Она сдаст работу, когда закончит." },
@@ -239,7 +253,7 @@ const BLOCKS = {
     { q: "C'est ___ qu'on apprend. (= практикуя)", o: ["en faisant","faisant","fait","faire"], a: 0, t: "Gérondif", e: "C'est en + gérondif + qu'on...", tr: "Учатся, практикуясь." },
     { q: "Выбери предложение с participe présent (без gérondif):", o: ["En chantant, elle cuisine.","Étant malade, il est resté chez lui.","En lisant, il s'est endormi.","En parlant vite, elle s'est trompée."], a: 1, t: "Participe présent", e: "Participe présent — без «en».", tr: "Будучи больным, он остался дома." },
     { q: "Je n'ai ___ compris cette explication. (= абсолютно ничего)", o: ["pas","jamais","rien","plus"], a: 2, t: "Négation", e: "Ne...rien = ничего.", tr: "Я вообще ничего не понял в этом объяснении." },
-    { q: "Elle ne parle ___ que le français. (= только)", o: ["pas","jamais","plus","que"], a: 3, t: "Négation", e: "Ne...que = только.", tr: "Она говорит только по-французски." },
+    { q: "Elle ne parle ___ le français. (= только)", o: ["pas","jamais","plus","que"], a: 3, t: "Négation", e: "Ne...que = только.", tr: "Она говорит только по-французски." },
     { q: "Il ne travaille ___ ici. (= больше не)", o: ["jamais","que","plus","rien"], a: 2, t: "Négation", e: "Ne...plus = больше не.", tr: "Он больше здесь не работает." },
     { q: "Je n'ai ___ vu ___ d'aussi beau. (= никогда ничего)", o: ["jamais / rien","pas / rien","plus / jamais","rien / jamais"], a: 0, t: "Négation", e: "Двойное отрицание: ne...jamais...rien.", tr: "Я никогда не видел ничего настолько красивого." },
     { q: "Elle a appris le français ___ six mois. (= за шесть месяцев)", o: ["depuis","pendant","en","dans"], a: 2, t: "Prépositions de temps", e: "En = за (результат достигнут).", tr: "Она выучила французский за шесть месяцев." },
@@ -270,17 +284,22 @@ const BLOCKS = {
 };
 
 const LEVEL_ORDER = ['A1','A2','B1'];
-const GATE = { A1: 0.6, A2: 0.5, B1: 0 };
+const GATE = { A1: 0.6, A2: 0.5, B1: 0.5 };
+const LEVEL_MESSAGES = {
+  A1: { pass: 'Базовый уровень освоен уверенно.', fail: 'Основы être/avoir, артикли и базовая лексика пока плавают. Стоит закрепить фундамент A1 и попробовать ещё раз.' },
+  A2: { pass: 'Уверенно владеешь A2. Можно двигаться к B1.', fail: 'A2 (passé composé, местоимения y/en/lui/leur, gérondif) пока даётся с трудом — разбери ошибки ниже и попробуй снова.' },
+  B1: { pass: 'B1 пройден уверенно. Готов двигаться к B2.', fail: 'B1 (plus-que-parfait, conditionnel passé, discours indirect) — зона роста. Разбери ошибки ниже и попробуй ещё раз.' }
+};
 
 const L = ['A','B','C','D'];
-const STORAGE_KEY = 'niveau-fr-progress-v1';
+const STORAGE_KEY = 'niveau-fr-progress-v2';
+let screen = 'picker'; // 'picker' | 'banner' | 'question' | 'certificate'
 let stageIdx = 0;
 let cur = 0;
 let answered = [];
 let userAns = [];
 let allResults = {};
-let showingBanner = true;
-let finished = false;
+let certLevel = null;
 let currentSpeakText = null;
 
 function getApp() { return document.getElementById('app'); }
@@ -288,7 +307,7 @@ function getApp() { return document.getElementById('app'); }
 function saveProgress() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      stageIdx, cur, answered, userAns, allResults, showingBanner, finished
+      screen, stageIdx, cur, answered, userAns, allResults, certLevel
     }));
   } catch (e) { /* storage unavailable — progress just won't persist */ }
 }
@@ -299,10 +318,10 @@ function loadProgress() {
     if (!raw) return false;
     const s = JSON.parse(raw);
     if (!s || typeof s.stageIdx !== 'number' || !LEVEL_ORDER[s.stageIdx]) return false;
+    screen = s.screen || 'picker';
     stageIdx = s.stageIdx; cur = s.cur || 0;
     answered = s.answered || []; userAns = s.userAns || [];
-    allResults = s.allResults || {}; showingBanner = !!s.showingBanner;
-    finished = !!s.finished;
+    allResults = s.allResults || {}; certLevel = s.certLevel || null;
     return true;
   } catch (e) { return false; }
 }
@@ -348,31 +367,63 @@ function renderLevelTrack() {
   const track = document.getElementById('levelTrack');
   track.innerHTML = LEVEL_ORDER.map((lvl, i) => {
     let cls = 'level-pill';
-    if (i < stageIdx || (i === stageIdx && !showingBanner && allResults[lvl])) cls += ' done';
-    if (i === stageIdx) cls += ' active';
+    if (allResults[lvl]) cls += ' done';
+    if (i === stageIdx && (screen === 'banner' || screen === 'question')) cls += ' active';
     return `<span class="${cls}">${lvl}</span>`;
   }).join('');
 }
 
 function startApp() {
-  renderLevelTrack();
   const resumed = loadProgress();
-  if (resumed && finished) renderFinalResult();
-  else if (resumed && !showingBanner) { renderQuestion(); if (answered[cur] !== undefined) restoreState(); }
-  else renderBanner();
+  renderLevelTrack();
+  if (resumed && screen === 'certificate' && certLevel) renderCertificate(certLevel);
+  else if (resumed && screen === 'question') { renderQuestion(); if (answered[cur] !== undefined) restoreState(); }
+  else if (resumed && screen === 'banner') renderBanner();
+  else renderPicker();
   const hint = document.getElementById('addHint');
   if (hint) hint.textContent = 'Открой эту страницу в браузере телефона и добавь на главный экран через «Поделиться → На экран Домой» — тест будет запускаться как отдельное приложение.';
 }
 
+function renderPicker() {
+  screen = 'picker';
+  saveProgress();
+  renderLevelTrack();
+  const cardsHtml = LEVEL_ORDER.map(lvl => {
+    const r = allResults[lvl];
+    const infoHtml = r
+      ? `<div class="picker-result">${r.correct}/${r.total} · ${Math.round(r.correct / r.total * 100)}%</div>`
+      : `<div class="picker-result picker-result-empty">ещё не пройден</div>`;
+    return `
+      <div class="picker-card">
+        <div class="picker-level">${lvl}</div>
+        <div class="picker-info">${infoHtml}</div>
+        <button class="btn-primary" onclick="selectLevel('${lvl}')">${r ? 'Пройти заново' : 'Начать'} →</button>
+      </div>
+    `;
+  }).join('');
+  getApp().innerHTML = `
+    <div class="picker-screen">
+      <div class="picker-intro">Выбери, с какого блока начать — необязательно по порядку. За каждый пройденный блок формируется отдельный сертификат.</div>
+      <div class="picker-grid">${cardsHtml}</div>
+      ${Object.keys(allResults).length > 0 ? `<div class="picker-reset"><button class="link-reset" onclick="restartAll()">Сбросить весь прогресс</button></div>` : ''}
+    </div>
+  `;
+}
+
+function selectLevel(lvl) {
+  stageIdx = LEVEL_ORDER.indexOf(lvl);
+  renderBanner();
+}
+
 function renderBanner() {
-  showingBanner = true;
+  screen = 'banner';
   saveProgress();
   renderLevelTrack();
   const lvl = LEVEL_ORDER[stageIdx];
   const intro = {
-    A1: "Начинаем с базового уровня. 40 вопросов: être/avoir, артикли, отрицание, глаголы, aller, вопросительные слова, предлоги места, faux amis, числа, время.",
-    A2: "Хорошо. Переходим к A2. 40 вопросов: passé composé, согласование participe, imparfait, местоимения y/en/lui/leur, gérondif, сравнение, relatifs, conditionnel, futur, faux amis, предлоги времени.",
-    B1: "Идём дальше, к B1. 40 вопросов: plus-que-parfait, conditionnel passé, discours indirect, gérondif/participe présent, négation, предлоги времени, порядок местоимений, согласование participe, superlatif, faux amis, глаголы с предлогами, relatifs."
+    A1: "Базовый уровень. 40 вопросов: être/avoir, артикли, отрицание, глаголы, aller, вопросительные слова, предлоги места, faux amis, числа, время.",
+    A2: "Уровень A2. 40 вопросов: passé composé, согласование participe, imparfait, местоимения y/en/lui/leur, gérondif, сравнение, relatifs, conditionnel, futur, faux amis, предлоги времени.",
+    B1: "Уровень B1. 40 вопросов: plus-que-parfait, conditionnel passé, discours indirect, gérondif/participe présent, négation, предлоги времени, порядок местоимений, согласование participe, superlatif, faux amis, глаголы с предлогами, relatifs."
   };
   getApp().innerHTML = `
     <div class="stage-banner">
@@ -380,11 +431,12 @@ function renderBanner() {
       <p>${intro[lvl]}</p>
       <button class="btn-primary" onclick="beginBlock()">Начать блок →</button>
     </div>
+    <div class="picker-reset"><button class="link-reset" onclick="renderPicker()">← Выбрать другой блок</button></div>
   `;
 }
 
 function beginBlock() {
-  showingBanner = false;
+  screen = 'question';
   cur = 0; answered = []; userAns = [];
   saveProgress();
   renderQuestion();
@@ -487,73 +539,48 @@ function finishBlock() {
   const mistakes = userAns.map((u, i) => u !== block[i].a ? i : null).filter(i => i !== null)
     .map(i => ({ q: block[i].q, t: block[i].t, your: block[i].o[userAns[i]], right: block[i].o[block[i].a], e: block[i].e }));
 
-  allResults[lvl] = { correct, total: block.length, mistakes };
+  allResults[lvl] = { correct, total: block.length, mistakes, date: new Date().toISOString() };
 
-  const share = correct / block.length;
-  const passed = share >= GATE[lvl];
-
-  if (passed && stageIdx < LEVEL_ORDER.length - 1) {
-    stageIdx++;
-    renderBanner();
-  } else {
-    finished = true;
-    saveProgress();
-    renderFinalResult();
-  }
+  screen = 'certificate';
+  certLevel = lvl;
+  saveProgress();
+  renderCertificate(lvl);
 }
 
-function renderFinalResult() {
+function renderCertificate(lvl) {
   renderLevelTrack();
-  const order = LEVEL_ORDER.filter(l => allResults[l]);
-  const last = order[order.length - 1];
-  const lastShare = allResults[last].correct / allResults[last].total;
-  const lastPassed = lastShare >= GATE[last];
-
-  let finalLevel, title, msg;
-  if (last === 'A1' && !lastPassed) {
-    finalLevel = 'Ниже A1'; title = 'Пре-A1 — база ещё формируется';
-    msg = 'Основы être/avoir, артикли и базовая лексика пока плавают. Стоит закрепить фундамент A1, прежде чем двигаться дальше.';
-  } else if (last === 'A1' && lastPassed) {
-    finalLevel = 'A1'; title = 'A1 подтверждён';
-    msg = 'Базовый уровень освоен уверенно.';
-  } else if (last === 'A2' && !lastPassed) {
-    finalLevel = 'A1–A2'; title = 'A1 закреплён, A2 в процессе';
-    msg = 'A1 пройден хорошо, но A2 (passé composé, местоимения y/en/lui/leur, gérondif) пока даётся с трудом. Смотри разбор ошибок ниже.';
-  } else if (last === 'A2' && lastPassed) {
-    finalLevel = 'A2'; title = 'A2 подтверждён';
-    msg = 'Уверенно владеешь A2. До B1 совсем немного.';
-  } else if (last === 'B1' && !lastPassed) {
-    finalLevel = 'A2–B1'; title = 'A2 закреплён, B1 в процессе';
-    msg = 'A1 и A2 пройдены хорошо. B1 (plus-que-parfait, conditionnel passé, discours indirect) — зона роста. Разбери ошибки ниже.';
-  } else {
-    finalLevel = 'B1'; title = 'B1 подтверждён';
-    msg = 'Прошёл все три блока уверенно. Готов двигаться к B2.';
-  }
-
-  const breakdownHtml = order.map(l => {
-    const r = allResults[l];
-    return `<div class="stat-pill"><div class="val">${r.correct}/${r.total}</div><div class="lbl">${l}</div></div>`;
-  }).join('');
-
-  const allMistakes = order.flatMap(l => allResults[l].mistakes.map(m => ({...m, lvl: l})));
+  const r = allResults[lvl];
+  const share = r.correct / r.total;
+  const pct = Math.round(share * 100);
+  const passed = share >= GATE[lvl];
+  const title = passed ? `Уровень ${lvl} подтверждён ✓` : `Уровень ${lvl} — есть над чем поработать`;
+  const msg = passed ? LEVEL_MESSAGES[lvl].pass : LEVEL_MESSAGES[lvl].fail;
+  const dateStr = new Date(r.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+  const nextIdx = LEVEL_ORDER.indexOf(lvl) + 1;
+  const nextLvl = LEVEL_ORDER[nextIdx];
 
   getApp().innerHTML = `
     <div class="result-screen">
-      <div class="result-hero">
-        <div class="result-level">${finalLevel}</div>
+      <div class="result-hero cert-hero">
+        <div class="cert-seal">${passed ? '🏅' : '📄'}</div>
+        <div class="result-level">${lvl}</div>
         <div class="result-title">${title}</div>
         <div class="result-msg">${msg}</div>
-        <div class="breakdown">${breakdownHtml}</div>
+        <div class="breakdown">
+          <div class="stat-pill"><div class="val">${r.correct}/${r.total}</div><div class="lbl">верно</div></div>
+          <div class="stat-pill"><div class="val">${pct}%</div><div class="lbl">результат</div></div>
+        </div>
+        <div class="cert-date">Сертификат сформирован ${dateStr}</div>
       </div>
-      ${allMistakes.length === 0 ? `<div class="mistakes-section"><div style="text-align:center;color:var(--correct-border);">🎉 Ни одной ошибки на пройденных блоках!</div></div>` : `
+      ${r.mistakes.length === 0 ? `<div class="mistakes-section"><div style="text-align:center;color:var(--correct-border);">🎉 Ни одной ошибки в этом блоке!</div></div>` : `
         <div class="mistakes-section">
           <div class="mistakes-title">
             Разбор ошибок
-            <span class="mistakes-badge">${allMistakes.length}</span>
+            <span class="mistakes-badge">${r.mistakes.length}</span>
           </div>
-          ${allMistakes.map(m => `
+          ${r.mistakes.map(m => `
             <div class="mistake-item">
-              <span class="mistake-tag">${m.lvl} · ${m.t}</span>
+              <span class="mistake-tag">${lvl} · ${m.t}</span>
               <div class="mistake-q">${m.q}</div>
               <div class="mistake-answers">
                 <div class="ans-row"><span class="ans-badge wrong">Твой ответ</span> ${m.your}</div>
@@ -565,15 +592,17 @@ function renderFinalResult() {
         </div>
       `}
       <div class="result-nav">
-        <button class="btn-restart" onclick="restartAll()">Пройти заново</button>
+        ${nextLvl ? `<button class="btn-restart" onclick="selectLevel('${nextLvl}')">Следующий блок: ${nextLvl} →</button>` : ''}
+        <button class="btn-restart" onclick="selectLevel('${lvl}')">Пройти ${lvl} заново</button>
       </div>
+      <div class="picker-reset"><button class="link-reset" onclick="renderPicker()">← Все блоки</button></div>
     </div>
   `;
 }
 
 function restartAll() {
-  stageIdx = 0; cur = 0; answered = []; userAns = []; allResults = {};
-  showingBanner = true; finished = false;
+  stageIdx = 0; cur = 0; answered = []; userAns = []; allResults = {}; certLevel = null;
+  screen = 'picker';
   clearProgress();
   startApp();
 }
