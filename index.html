@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=ai-legible&utm_source=comment&utm_medium=referral&utm_id=8a28d4f3-6e6a-416c-b1d2-355a589f6c02
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+<meta name="hosting-provider" content="Netlify">
+<meta name="netlify-deploy" content="https://netlify.new/?utm_campaign=ai-legible&amp;utm_source=meta&amp;utm_medium=referral&amp;utm_id=8a28d4f3-6e6a-416c-b1d2-355a589f6c02">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Niveau FR">
+<meta name="theme-color" content="#2d5a4e">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAADYUlEQVR4nO3du3ETUQCGUclDCzTBDAEpERkZBVAChbkAd0HslBpowQSMPTxka1f71OdzCtDe4NPvKynw8bAD779+edj6DEx3f3t33PoMmxxAwK/DFoGv9kARv25rxb3oQ0TMKUvGvcgLC5khlgj7Zu4XFDNDLdHKbO8QITPFXGs9y0KLmanmamjSu0LILGHKWl+80GJmKVPauihoMbO0SxsbHbSYWcslrY0KWsysbWxzg4MWM1sZ096goMXM1oY2eDZoMbMXQ1qc/adv2NKLQVtn9uZck88GLWb26qU2XTlIORm0dWbvnmv0v6DFzLU41aorByl/BW2duTb/NmuhSRE0KU9Bu25wrf5s10KTImhSbg4H1w2u32PDFpoUQZMiaFKO7s+UWGhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpLxZ+4H33z+v/cjRHn582/oIZ/1893HrIwzy6cPbVZ9noUkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJuX4/uuXh60PAXOx0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJubm/vTtufQiYw/3t3dFCkyJoUgRNys3h8PvusfVBYIrHhi00KYIm5Slo1w6u1Z/tWmhSBE3KX0G7dnBt/m3WQpPyX9BWmmtxqtWTCy1q9u65Rl05SHk2aCvNXr3U5osLLWr25lyTrhyknA3aSrMXQ1octNCiZmtDGxx85RA1WxnT3qg7tKhZ29jmRn8oFDVruaS1i77lEDVLu7Sxi7+2EzVLmdLWLFH6X4fMYY6RnOWHFWvNVHM1NHuI1pox5h7D2X/6ttYMtUQri8ZnrTllydFbbU3F/bqt9Zd7k+uBuF+HLa6fu7jvCrxhD5+ffgGsxcNcyz5cOAAAAABJRU5ErkJggg==">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAkElEQVR4nGNkwAJ0o/z+YxOnFFxetokRXQxFgFYW43MIE70tR7eLid6WozuCiZBCWgPGgfA9MhjwEBh1AAs2wcsn3XFq+H8nC6fcOy0rvJY5GIpiiA14CIw6YNQBow4YdcCoA0YdMNoiGnUAE7buEr3A5WWbGAc+BGAuobfFMDuZ0AXoaTkDA1rvGAbo2T0HALfEKj7eVy3qAAAAAElFTkSuQmCC">
+<title>Niveau FR</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  :root {
+    --bg: #f7f5f0;
+    --card: #ffffff;
+    --text: #1a1814;
+    --muted: #7a7570;
+    --accent: #2d5a4e;
+    --accent-light: #e8f0ee;
+    --border: #e2ddd6;
+    --correct-bg: #eaf3ee;
+    --correct-border: #2d5a4e;
+    --correct-text: #1a3d2e;
+    --wrong-bg: #faeaea;
+    --wrong-border: #c0392b;
+    --wrong-text: #5c1a1a;
+  }
+  html { -webkit-text-size-adjust: 100%; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 2rem 1rem calc(2rem + env(safe-area-inset-bottom)); }
+  .container { max-width: 680px; margin: 0 auto; }
+  .header { text-align: center; margin-bottom: 1.5rem; animation: fadeDown 0.5s ease; }
+  .header-flag { font-size: 2rem; margin-bottom: 0.5rem; }
+  .header h1 { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 600; color: var(--text); letter-spacing: -0.5px; margin-bottom: 0.25rem; }
+  .header p { font-size: 0.85rem; color: var(--muted); font-weight: 300; }
+  .level-track { display: flex; justify-content: center; gap: 8px; margin-bottom: 1.5rem; animation: fadeDown 0.5s ease 0.05s both; }
+  .level-pill { font-size: 0.75rem; font-weight: 500; padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); color: var(--muted); background: var(--card); transition: all 0.2s; }
+  .level-pill.active { background: var(--accent); border-color: var(--accent); color: white; }
+  .level-pill.done { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+  .progress-wrap { margin-bottom: 1.25rem; animation: fadeDown 0.5s ease 0.1s both; }
+  .progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+  .progress-label { font-size: 0.78rem; color: var(--muted); }
+  .progress-nums { font-size: 0.78rem; font-weight: 500; color: var(--accent); }
+  .bar { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.4s cubic-bezier(.4,0,.2,1); }
+  .stats { display: flex; gap: 8px; margin-bottom: 1.25rem; animation: fadeDown 0.5s ease 0.12s both; }
+  .stat-pill { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 0.5rem 0.6rem; text-align: center; }
+  .stat-pill .val { font-size: 1.05rem; font-weight: 500; line-height: 1; }
+  .stat-pill .lbl { font-size: 0.65rem; color: var(--muted); margin-top: 2px; }
+  .val-correct { color: var(--correct-border); }
+  .val-wrong { color: var(--wrong-border); }
+  .val-neutral { color: var(--text); }
+  .q-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.6rem; margin-bottom: 1.25rem; animation: fadeUp 0.4s ease; }
+  .q-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; }
+  .q-tag { font-size: 0.7rem; font-weight: 500; padding: 3px 10px; background: var(--accent-light); color: var(--accent); border-radius: 20px; letter-spacing: 0.3px; }
+  .q-number { font-size: 0.75rem; color: var(--muted); margin-left: auto; }
+  .q-text { font-family: 'Playfair Display', serif; font-size: 1.12rem; font-weight: 500; line-height: 1.55; margin-bottom: 1.2rem; color: var(--text); }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .opt { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; font-size: 0.9rem; line-height: 1.4; background: var(--card); color: var(--text); text-align: left; width: 100%; transition: border-color 0.15s, background 0.15s, transform 0.1s; font-family: 'DM Sans', sans-serif; }
+  .opt:hover:not(.disabled) { border-color: var(--accent); background: var(--accent-light); transform: translateX(2px); }
+  .opt:active:not(.disabled) { transform: scale(0.99); }
+  .opt.disabled { cursor: default; }
+  .opt-letter { width: 22px; height: 22px; min-width: 22px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 500; color: var(--muted); transition: all 0.15s; margin-top: 1px; }
+  .opt.correct { background: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-text); }
+  .opt.correct .opt-letter { background: var(--correct-border); border-color: var(--correct-border); color: white; }
+  .opt.wrong { background: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong-text); }
+  .opt.wrong .opt-letter { background: var(--wrong-border); border-color: var(--wrong-border); color: white; }
+  .explanation { margin-top: 1rem; padding: 12px 14px; background: #f9f7f4; border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-size: 0.85rem; line-height: 1.6; color: var(--muted); display: none; animation: fadeIn 0.3s ease; }
+  .explanation.show { display: block; }
+  .exp-label { font-size: 0.7rem; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .tr-row { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); font-style: italic; color: var(--text); }
+  .tr-label { font-size: 0.7rem; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; font-style: normal; }
+  .speak-row { margin-top: 10px; }
+  .speak-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 20px; border: 1px solid var(--accent); background: var(--accent-light); color: var(--accent); font-size: 0.8rem; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+  .speak-btn:hover { background: var(--accent); color: white; }
+  .speak-btn:disabled { opacity: 0.45; cursor: default; }
+  .nav { display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-top: 0.5rem; animation: fadeUp 0.4s ease 0.1s both; }
+  .btn-primary { padding: 12px 22px; border-radius: 10px; background: var(--accent); color: white; border: 1px solid var(--accent); font-size: 0.9rem; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; width: 100%; }
+  .btn-primary:hover:not(:disabled) { background: #1e3f36; border-color: #1e3f36; }
+  .btn-primary:disabled { opacity: 0.35; cursor: default; }
+  .stage-banner { background: var(--accent-light); border: 1px solid var(--accent); border-radius: 14px; padding: 1.5rem; text-align: center; margin-bottom: 1.25rem; animation: fadeUp 0.4s ease; }
+  .stage-banner h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--accent); margin-bottom: 0.4rem; }
+  .stage-banner p { font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem; }
+  .result-screen { animation: fadeUp 0.5s ease; }
+  .result-hero { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2.2rem 1.5rem; text-align: center; margin-bottom: 1.25rem; }
+  .result-level { font-family: 'Playfair Display', serif; font-size: 3.2rem; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 0.5rem; }
+  .result-title { font-size: 1.05rem; font-weight: 500; color: var(--text); margin-bottom: 0.5rem; }
+  .result-msg { font-size: 0.9rem; line-height: 1.65; color: var(--muted); max-width: 420px; margin: 0 auto 1.4rem; }
+  .breakdown { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .breakdown .stat-pill { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 0.55rem 0.8rem; text-align: center; min-width: 72px; flex: none; }
+  .breakdown .val { font-size: 1.05rem; font-weight: 500; color: var(--accent); }
+  .breakdown .lbl { font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
+  .mistakes-section { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.4rem; margin-bottom: 1.25rem; }
+  .mistakes-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 500; margin-bottom: 1rem; color: var(--text); display: flex; align-items: center; gap: 8px; }
+  .mistakes-badge { font-family: 'DM Sans', sans-serif; font-size: 0.7rem; background: var(--wrong-bg); color: var(--wrong-border); border-radius: 20px; padding: 2px 8px; font-weight: 500; }
+  .mistake-item { border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; font-size: 0.85rem; }
+  .mistake-q { font-weight: 500; color: var(--text); margin-bottom: 6px; line-height: 1.4; }
+  .mistake-tag { font-size: 0.68rem; color: var(--accent); font-weight: 500; margin-bottom: 4px; display: block; }
+  .mistake-answers { display: flex; flex-direction: column; gap: 3px; margin-bottom: 6px; }
+  .ans-row { font-size: 0.8rem; display: flex; align-items: center; gap: 6px; }
+  .ans-badge { font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; font-weight: 500; }
+  .ans-badge.correct { background: var(--correct-bg); color: var(--correct-border); }
+  .ans-badge.wrong { background: var(--wrong-bg); color: var(--wrong-border); }
+  .mistake-exp { font-size: 0.78rem; color: var(--muted); line-height: 1.5; border-top: 1px solid var(--border); padding-top: 6px; margin-top: 6px; }
+  .result-nav { display: flex; gap: 10px; justify-content: center; }
+  .btn-restart { padding: 12px 32px; border-radius: 10px; background: var(--accent); color: white; border: none; font-size: 0.9rem; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.15s; }
+  .btn-restart:hover { background: #1e3f36; }
+  .add-hint { text-align: center; font-size: 0.72rem; color: var(--muted); margin-top: 1.5rem; line-height: 1.6; }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @media (max-width: 480px) {
+    body { padding: 1.25rem 0.9rem calc(1.5rem + env(safe-area-inset-bottom)); }
+    .header h1 { font-size: 1.3rem; }
+    .q-text { font-size: 1rem; }
+    .q-card { padding: 1.25rem; }
+    .result-level { font-size: 2.4rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="header-flag">🇫🇷</div>
+    <h1>Тест на уровень французского</h1>
+    <p>Адаптивный тест A1 → A2 → B1 · с переводом и произношением</p>
+  </div>
+  <div class="level-track" id="levelTrack"></div>
+  <div id="app"></div>
+  <div class="add-hint" id="addHint"></div>
+</div>
+<script>
+const BLOCKS = {
+  A1: [
+    { q: "Je ___ étudiant.", o: ["est","suis","es","sommes"], a: 1, t: "Être", e: "Глагол être: je → SUIS. Je suis, tu es, il/elle est, nous sommes, vous êtes, ils/elles sont.", tr: "Я студент." },
+    { q: "Elle ___ française.", o: ["suis","sommes","est","êtes"], a: 2, t: "Être", e: "Глагол être: elle → EST.", tr: "Она француженка." },
+    { q: "Выбери ВЕРНОЕ предложение:", o: ["Tu es fatigué ?","Tu est fatigué ?","Tu être fatigué ?","Tu suis fatigué ?"], a: 0, t: "Être", e: "Tu es — единственная правильная форма.", tr: "Ты устал?" },
+    { q: "Nous ___ contents de vous voir.", o: ["est","êtes","sont","sommes"], a: 3, t: "Être", e: "Глагол être: nous → SOMMES.", tr: "Мы рады вас видеть." },
+    { q: "J'___ un chien et un chat.", o: ["est","ai","as","ont"], a: 1, t: "Avoir", e: "Глагол avoir: je → AI.", tr: "У меня есть собака и кошка." },
+    { q: "Il ___ vingt ans.", o: ["est","suis","a","ont"], a: 2, t: "Avoir", e: "Возраст → avoir: il a vingt ans.", tr: "Ему двадцать лет." },
+    { q: "Vous ___ de la chance !", o: ["avons","avez","ont","ai"], a: 1, t: "Avoir", e: "Avoir: vous → AVEZ.", tr: "Вам везёт!" },
+    { q: "Elles ___ faim après le sport.", o: ["est","sont","ont","avons"], a: 2, t: "Avoir", e: "Голод/жажда/жара → avoir: elles ONT faim.", tr: "Они голодны после спорта." },
+    { q: "Je mange ___ pomme.", o: ["un","le","la","une"], a: 3, t: "Артикли", e: "Pomme — женский род → une.", tr: "Я ем яблоко." },
+    { q: "C'est ___ livre intéressant.", o: ["une","un","la","les"], a: 1, t: "Артикли", e: "Livre — мужской род → un.", tr: "Это интересная книга." },
+    { q: "Je bois ___ café le matin.", o: ["un","une","le","du"], a: 3, t: "Артикли", e: "Несчитаемое → партитивный du.", tr: "Я пью кофе по утрам." },
+    { q: "Elle écoute ___ musique.", o: ["une","de la","du","la"], a: 1, t: "Артикли", e: "Musique — женский род, несчитаемое → de la.", tr: "Она слушает музыку." },
+    { q: "Nous avons ___ enfants.", o: ["de","des","les","du"], a: 1, t: "Артикли", e: "Считаемое множественное → des.", tr: "У нас есть дети." },
+    { q: "Je ___ parle ___ anglais.", o: ["ne / pas","pas / ne","n' / pas","ne / jamais"], a: 0, t: "Отрицание", e: "ne + глагол + pas.", tr: "Я не говорю по-английски." },
+    { q: "Il ne mange ___ de viande.", o: ["pas","point","jamais","plus"], a: 0, t: "Отрицание", e: "Простое отрицание → ne...pas.", tr: "Он не ест мясо." },
+    { q: "Выбери ПРАВИЛЬНОЕ отрицание:", o: ["Je pas aime le froid.","Je n'aime pas le froid.","Je ne aime le froid pas.","Je aime ne pas le froid."], a: 1, t: "Отрицание", e: "Перед гласной: n'aime.", tr: "Я не люблю холод." },
+    { q: "Tu ___ où en ce moment ?", o: ["travailles","travaille","travaillez","travaillons"], a: 0, t: "Глаголы 1 группы", e: "Tu → -es.", tr: "Где ты сейчас работаешь?" },
+    { q: "Nous ___ le français depuis 6 mois.", o: ["étudions","étudiez","étudient","étudont"], a: 0, t: "Глаголы 1 группы", e: "Nous → -ons.", tr: "Мы изучаем французский уже 6 месяцев." },
+    { q: "Ils ___ souvent au restaurant.", o: ["mange","manges","mangent","mangeons"], a: 2, t: "Глаголы 1 группы", e: "Ils/elles → -ent.", tr: "Они часто едят в ресторане." },
+    { q: "Vous ___ du sport le weekend ?", o: ["pratiquez","pratiques","pratiquent","pratiquons"], a: 0, t: "Глаголы 1 группы", e: "Vous → -ez.", tr: "Вы занимаетесь спортом по выходным?" },
+    { q: "Je ___ au marché demain.", o: ["vas","vais","allons","vont"], a: 1, t: "Aller", e: "Aller: je VAIS.", tr: "Я пойду на рынок завтра." },
+    { q: "Elle ___ à l'école à pied.", o: ["vais","va","vas","allons"], a: 1, t: "Aller", e: "Aller, elle → VA.", tr: "Она идёт в школу пешком." },
+    { q: "Nous ___ au cinéma ce soir.", o: ["vas","allez","allons","vont"], a: 2, t: "Aller", e: "Aller, nous → ALLONS.", tr: "Мы идём в кино сегодня вечером." },
+    { q: "___ tu habites ?", o: ["Comment","Pourquoi","Où","Quand"], a: 2, t: "Вопросительные слова", e: "Où = где / куда.", tr: "Где ты живёшь?" },
+    { q: "___ est-ce que tu t'appelles ?", o: ["Quand","Comment","Pourquoi","Où"], a: 1, t: "Вопросительные слова", e: "Comment = как.", tr: "Как тебя зовут?" },
+    { q: "___ coûte cette robe ?", o: ["Combien","Comment","Quoi","Lequel"], a: 0, t: "Вопросительные слова", e: "Combien = сколько.", tr: "Сколько стоит это платье?" },
+    { q: "Le chat est ___ la table.", o: ["sur","sous","dans","entre"], a: 0, t: "Предлоги места", e: "Sur = на поверхности.", tr: "Кот на столе." },
+    { q: "Le livre est ___ le sac.", o: ["sur","sous","dans","devant"], a: 2, t: "Предлоги места", e: "Dans = внутри.", tr: "Книга в сумке." },
+    { q: "L'école est ___ la pharmacie et la boulangerie.", o: ["devant","derrière","entre","sur"], a: 2, t: "Предлоги места", e: "Entre = между.", tr: "Школа между аптекой и булочной." },
+    { q: "J'habite ___ Paris.", o: ["au","en","à","dans"], a: 2, t: "Предлоги места/времени", e: "Города → à.", tr: "Я живу в Париже." },
+    { q: "Elle habite ___ France.", o: ["à","au","en","dans"], a: 2, t: "Предлоги места/времени", e: "Страны женского рода → en.", tr: "Она живёт во Франции." },
+    { q: "Il arrive ___ lundi prochain.", o: ["en","au","dans","à"], a: 3, t: "Предлоги места/времени", e: "Дни недели → à.", tr: "Он приезжает в следующий понедельник." },
+    { q: "«Librairie» по-русски — это:", o: ["библиотека","книжный магазин","читальный зал","архив"], a: 1, t: "Faux amis", e: "Librairie = книжный магазин, bibliothèque = библиотека." },
+    { q: "«Sensible» по-французски означает:", o: ["сенсационный","чувствительный","разумный","смешной"], a: 1, t: "Faux amis", e: "Sensible = чувствительный." },
+    { q: "Как сказать «Мне жарко»?", o: ["Je suis chaud.","J'ai chaud.","Je fais chaud.","Il fait chaud moi."], a: 1, t: "Лексика", e: "Жара/холод/голод/жажда → avoir.", tr: "Мне жарко." },
+    { q: "«Je suis désolé(e)» означает:", o: ["Я рада/рад","Я устала/устал","Я извиняюсь","Я согласна/согласен"], a: 2, t: "Лексика", e: "Désolé(e) = мне жаль.", tr: "Мне очень жаль / я извиняюсь." },
+    { q: "Как будет 80 по-французски?", o: ["huitante","octante","quatre-vingts","quatre-vingts-zéro"], a: 2, t: "Числительные", e: "80 = quatre-vingts." },
+    { q: "Который час: «Il est midi et demi» ?", o: ["12:00","12:15","12:30","11:30"], a: 2, t: "Время", e: "Midi et demi = 12:30.", tr: "Сейчас половина первого (12:30)." },
+    { q: "«Avant-hier» — это:", o: ["вчера","позавчера","завтра","послезавтра"], a: 1, t: "Время", e: "Avant-hier = позавчера." },
+    { q: "Выбери правильное приветствие вечером:", o: ["Bonjour !","Bonsoir !","Bonne nuit !","Salut le matin !"], a: 1, t: "Лексика", e: "Bonsoir = добрый вечер.", tr: "Добрый вечер!" }
+  ],
+  A2: [
+    { q: "Elle ___ arrivée hier soir.", o: ["a","est","avait","soit"], a: 1, t: "Passé composé", e: "Глаголы движения → être.", tr: "Она приехала вчера вечером." },
+    { q: "Nous ___ mangé au restaurant samedi.", o: ["sommes","avons","êtes","sont"], a: 1, t: "Passé composé", e: "Manger — переходный → avoir.", tr: "Мы поели в ресторане в субботу." },
+    { q: "Ils ___ partis très tôt ce matin.", o: ["ont","avons","sont","être"], a: 2, t: "Passé composé", e: "Partir — движение → être.", tr: "Они уехали очень рано этим утром." },
+    { q: "Elle ___ sorti la poubelle. (= вынесла мусор)", o: ["est","a","soit","avait"], a: 1, t: "Passé composé", e: "Sortir с прямым дополнением → avoir.", tr: "Она вынесла мусор." },
+    { q: "Je ___ tombé(e) dans l'escalier.", o: ["ai","avoir","suis","soit"], a: 2, t: "Passé composé", e: "Tomber — движение → être.", tr: "Я упал(а) на лестнице." },
+    { q: "Les lettres qu'il ___ écrit___ sont importantes.", o: ["a écrites","a écrit","est écrit","a écrits"], a: 0, t: "Accord du participe", e: "COD перед глаголом → согласование.", tr: "Письма, которые он написал, важны." },
+    { q: "Marie et Sophie sont ___ au marché.", o: ["allés","allé","allées","aller"], a: 2, t: "Accord du participe", e: "Обе женского рода → allées.", tr: "Мари и Софи пошли на рынок." },
+    { q: "La robe qu'elle a ___ est magnifique.", o: ["acheté","achetée","achetés","achetées"], a: 1, t: "Accord du participe", e: "COD перед глаголом (ж.р.) → achetée.", tr: "Платье, которое она купила, великолепное." },
+    { q: "Quand j'étais enfant, je ___ souvent à la mer.", o: ["suis allé","allais","suis allée","allé"], a: 1, t: "Imparfait", e: "Повторяющееся действие → imparfait.", tr: "Когда я был(а) ребёнком, я часто ездил(а) на море." },
+    { q: "Hier, il ___ quand je suis sorti.", o: ["pleuvait","a plu","pleut","pleuvra"], a: 0, t: "Imparfait", e: "Фон действия → imparfait.", tr: "Вчера шёл дождь, когда я вышел." },
+    { q: "Soudain, quelqu'un ___ à la porte.", o: ["frappait","frappera","a frappé","frappe"], a: 2, t: "Imparfait vs PC", e: "«Soudain» → passé composé.", tr: "Внезапно кто-то постучал в дверь." },
+    { q: "Avant, elle ___ du piano tous les jours.", o: ["a joué","jouait","joue","jouera"], a: 1, t: "Imparfait", e: "Привычное действие в прошлом → imparfait.", tr: "Раньше она играла на пианино каждый день." },
+    { q: "Tu vas à Paris ? — Oui, j'___ vais demain.", o: ["en","lui","y","le"], a: 2, t: "Pronom Y", e: "Y заменяет à + lieu.", tr: "Ты едешь в Париж? — Да, я еду туда завтра." },
+    { q: "Tu veux du café ? — Oui, j'___ veux bien.", o: ["y","le","en","lui"], a: 2, t: "Pronom EN", e: "En заменяет du/de la/des.", tr: "Хочешь кофе? — Да, хочу немного." },
+    { q: "Elle pense à ses vacances. → Elle ___ pense souvent.", o: ["les","en","lui","y"], a: 3, t: "Pronom Y", e: "Y заменяет à + chose.", tr: "Она думает об отпуске. Она часто об этом думает." },
+    { q: "Il parle de son voyage. → Il ___ parle tout le temps.", o: ["y","lui","en","le"], a: 2, t: "Pronom EN", e: "En заменяет de + chose.", tr: "Он рассказывает о своей поездке. Он говорит об этом постоянно." },
+    { q: "Je téléphone à Marie. → Je ___ téléphone.", o: ["la","lui","y","en"], a: 1, t: "Pronom LUI", e: "Téléphoner à quelqu'un → lui.", tr: "Я звоню Мари. Я звоню ей." },
+    { q: "Il donne les clés à ses parents. → Il ___ donne les clés.", o: ["les","leur","lui","en"], a: 1, t: "Pronom LEUR", e: "À ses parents (мн.ч.) → leur.", tr: "Он отдаёт ключи родителям. Он отдаёт им ключи." },
+    { q: "Elle écrit à son ami. → Elle ___ écrit une lettre.", o: ["le","leur","lui","y"], a: 2, t: "Pronom LUI", e: "Écrire à quelqu'un → lui.", tr: "Она пишет другу. Она пишет ему письмо." },
+    { q: "Il écoute de la musique ___ faire la cuisine.", o: ["pour","en","à","avec"], a: 1, t: "Gérondif", e: "Gérondif = en + participe présent.", tr: "Он слушает музыку, готовя еду." },
+    { q: "___ travaillant beaucoup, elle a réussi ses examens.", o: ["Pour","En","À","Avec"], a: 1, t: "Gérondif", e: "En travaillant = благодаря тому что работала.", tr: "Много работая, она сдала экзамены." },
+    { q: "Elle s'est blessée ___ courant.", o: ["à","pour","en","sans"], a: 2, t: "Gérondif", e: "En courant — обстоятельство образа действия.", tr: "Она поранилась во время бега." },
+    { q: "Выбери ПРАВИЛЬНУЮ форму gérondif от «prendre»:", o: ["en prenant","en prenons","en prend","en prendre"], a: 0, t: "Gérondif", e: "En + основа nous + ant: en prenant." },
+    { q: "Marie est ___ grande que sa sœur.", o: ["aussi","autant","plus","tant"], a: 2, t: "Comparatif", e: "Plus + adj + que.", tr: "Мари выше своей сестры." },
+    { q: "Il travaille ___ que son collègue.", o: ["plus","autant","aussi","mieux"], a: 1, t: "Comparatif", e: "Autant que — с глаголами.", tr: "Он работает столько же, сколько его коллега." },
+    { q: "Ce film est ___ que le précédent. (= лучше)", o: ["plus bon","meilleur","mieux","plus bien"], a: 1, t: "Comparatif", e: "Bon → meilleur.", tr: "Этот фильм лучше предыдущего." },
+    { q: "Elle chante ___ que moi. (= лучше)", o: ["meilleur","plus bien","mieux","plus mieux"], a: 2, t: "Comparatif", e: "Bien → mieux.", tr: "Она поёт лучше меня." },
+    { q: "C'est le livre ___ j'ai lu la semaine dernière.", o: ["qui","dont","où","que"], a: 3, t: "Pronoms relatifs", e: "Que — прямое дополнение.", tr: "Это книга, которую я прочитал(а) на прошлой неделе." },
+    { q: "C'est l'acteur ___ joue dans ce film.", o: ["que","dont","qui","où"], a: 2, t: "Pronoms relatifs", e: "Qui — подлежащее.", tr: "Это актёр, который играет в этом фильме." },
+    { q: "C'est la ville ___ je suis né(e).", o: ["que","qui","dont","où"], a: 3, t: "Pronoms relatifs", e: "Où — место.", tr: "Это город, где я родился/родилась." },
+    { q: "C'est le film ___ tout le monde parle.", o: ["qui","que","où","dont"], a: 3, t: "Pronoms relatifs", e: "Parler de → dont.", tr: "Это фильм, о котором все говорят." },
+    { q: "Si j'avais le temps, je ___ voyager.", o: ["voyage","voyagerais","voyagerai","voyager"], a: 1, t: "Conditionnel présent", e: "Si + imparfait → conditionnel présent.", tr: "Если бы у меня было время, я бы путешествовал(а)." },
+    { q: "À ta place, je ___ ce médecin.", o: ["consulte","consulterais","consulterai","consultais"], a: 1, t: "Conditionnel présent", e: "«À ta place» → conditionnel.", tr: "На твоём месте я бы обратился(лась) к этому врачу." },
+    { q: "Demain, nous ___ à Lyon.", o: ["allons","irons","allions","aller"], a: 1, t: "Futur simple", e: "Futur simple de aller: irons.", tr: "Завтра мы поедем в Лион." },
+    { q: "Elle ___ son travail quand elle aura fini.", o: ["rend","rendra","rendrait","rendait"], a: 1, t: "Futur simple", e: "Обещание/факт в будущем → rendra.", tr: "Она сдаст работу, когда закончит." },
+    { q: "«Assister à une conférence» означает:", o: ["помочь на конференции","присутствовать на конференции","организовать конференцию","выступить на конференции"], a: 1, t: "Faux amis", e: "Assister à = присутствовать." },
+    { q: "«Je suis passionné(e)» означает:", o: ["я злюсь","я страдаю","я увлечён/увлечена","я пассивный/ая"], a: 2, t: "Faux amis", e: "Passionné(e) = увлечённый." },
+    { q: "«Actuellement» по-французски — это:", o: ["в действительности","в данный момент","на самом деле","активно"], a: 1, t: "Faux amis", e: "Actuellement = сейчас." },
+    { q: "«Éventuellement» означает:", o: ["в конце концов","возможно, может быть","наконец","в случае необходимости"], a: 1, t: "Faux amis", e: "Éventuellement = возможно." },
+    { q: "J'habite ici ___ trois ans.", o: ["il y a","dans","depuis","pendant"], a: 2, t: "Prépositions de temps", e: "Depuis — действие продолжается.", tr: "Я живу здесь уже три года." },
+    { q: "Il a appelé ___ dix minutes.", o: ["depuis","pendant","il y a","dans"], a: 2, t: "Prépositions de temps", e: "Il y a = тому назад.", tr: "Он позвонил десять минут назад." }
+  ],
+  B1: [
+    { q: "Quand je suis arrivé, elle ___ déjà partie.", o: ["est partie","était partie","a parti","avait parti"], a: 1, t: "Plus-que-parfait", e: "Действие раньше другого прошедшего → plus-que-parfait.", tr: "Когда я пришёл, она уже ушла." },
+    { q: "Il m'a dit qu'il ___ déjà vu ce film.", o: ["a vu","avait vu","est vu","était vu"], a: 1, t: "Discours indirect", e: "Passé composé → plus-que-parfait.", tr: "Он сказал мне, что уже видел этот фильм." },
+    { q: "Elle pleurait parce qu'elle ___ ses clés.", o: ["perd","a perdu","avait perdu","perdait"], a: 2, t: "Plus-que-parfait", e: "Причина раньше следствия → plus-que-parfait.", tr: "Она плакала, потому что потеряла ключи." },
+    { q: "Si j'avais su, je ___ te voir.", o: ["serais venu","serai venu","suis venu","viendrai"], a: 0, t: "Conditionnel passé", e: "Si + plus-que-parfait → conditionnel passé.", tr: "Если бы я знал, я бы пришёл тебя навестить." },
+    { q: "Tu ___ pu m'appeler ! (= ты мог бы)", o: ["pouvais","pourras","aurais","avais"], a: 2, t: "Conditionnel passé", e: "Упрёк о прошлом → aurais pu.", tr: "Ты мог бы мне позвонить!" },
+    { q: "Elle ___ partir plus tôt si elle avait su.", o: ["aurait pu","pouvait","peut","pourrait"], a: 0, t: "Conditionnel passé", e: "Si + plus-que-parfait → conditionnel passé.", tr: "Она могла бы уехать раньше, если бы знала." },
+    { q: "Il dit : «Je suis fatigué.» → Il dit qu'il ___ fatigué.", o: ["est","était","soit","a été"], a: 0, t: "Discours indirect", e: "Dire au présent — времена не меняются.", tr: "Он говорит, что устал." },
+    { q: "Elle a dit : «Je viendrai demain.» → Elle a dit qu'elle ___ le lendemain.", o: ["viendrait","viendra","vient","venait"], a: 0, t: "Discours indirect", e: "Passé + futur simple → conditionnel présent.", tr: "Она сказала, что придёт на следующий день." },
+    { q: "Il m'a demandé : «Tu as mangé ?» → Il m'a demandé si j'___ mangé.", o: ["ai","avais","aurais","aie"], a: 1, t: "Discours indirect", e: "Passé composé → plus-que-parfait.", tr: "Он спросил меня, поел ли я." },
+    { q: "___ la rue, il a vu son ami. (одновременность)", o: ["En traversant","Traversant","Traversé","Traverse"], a: 0, t: "Gérondif", e: "Gérondif = en + participe présent.", tr: "Переходя улицу, он увидел друга." },
+    { q: "C'est ___ qu'on apprend. (= практикуя)", o: ["en faisant","faisant","fait","faire"], a: 0, t: "Gérondif", e: "C'est en + gérondif + qu'on...", tr: "Учатся, практикуясь." },
+    { q: "Выбери предложение с participe présent (без gérondif):", o: ["En chantant, elle cuisine.","Étant malade, il est resté chez lui.","En lisant, il s'est endormi.","En parlant vite, elle s'est trompée."], a: 1, t: "Participe présent", e: "Participe présent — без «en».", tr: "Будучи больным, он остался дома." },
+    { q: "Je n'ai ___ compris cette explication. (= абсолютно ничего)", o: ["pas","jamais","rien","plus"], a: 2, t: "Négation", e: "Ne...rien = ничего.", tr: "Я вообще ничего не понял в этом объяснении." },
+    { q: "Elle ne parle ___ que le français. (= только)", o: ["pas","jamais","plus","que"], a: 3, t: "Négation", e: "Ne...que = только.", tr: "Она говорит только по-французски." },
+    { q: "Il ne travaille ___ ici. (= больше не)", o: ["jamais","que","plus","rien"], a: 2, t: "Négation", e: "Ne...plus = больше не.", tr: "Он больше здесь не работает." },
+    { q: "Je n'ai ___ vu ___ d'aussi beau. (= никогда ничего)", o: ["jamais / rien","pas / rien","plus / jamais","rien / jamais"], a: 0, t: "Négation", e: "Двойное отрицание: ne...jamais...rien.", tr: "Я никогда не видел ничего настолько красивого." },
+    { q: "Elle a appris le français ___ six mois. (= за шесть месяцев)", o: ["depuis","pendant","en","dans"], a: 2, t: "Prépositions de temps", e: "En = за (результат достигнут).", tr: "Она выучила французский за шесть месяцев." },
+    { q: "Je serai de retour ___ une heure. (= через час)", o: ["depuis","pendant","en","dans"], a: 3, t: "Prépositions de temps", e: "Dans = через (момент в будущем).", tr: "Я вернусь через час." },
+    { q: "Il a travaillé ___ toute la nuit sans dormir.", o: ["depuis","dans","en","pendant"], a: 3, t: "Prépositions de temps", e: "Pendant = в течение.", tr: "Он работал всю ночь напролёт, не спав." },
+    { q: "Je me souviens de cette journée. → Je ___ souviens.", o: ["m'en","m'y","me le","me la"], a: 0, t: "Pronoms EN/Y", e: "Se souvenir de → en.", tr: "Я помню этот день. Я его помню." },
+    { q: "Elle tient à ce projet. → Elle ___ tient beaucoup.", o: ["en","y","le","lui"], a: 1, t: "Pronoms EN/Y", e: "Tenir à → y.", tr: "Она дорожит этим проектом. Она очень им дорожит." },
+    { q: "Il a donné les fleurs à Marie. → Il ___ a données.", o: ["lui les","les lui","y les","en lui"], a: 1, t: "Ordre des pronoms", e: "le/la/les перед lui/leur.", tr: "Он подарил цветы Мари. Он подарил их ей." },
+    { q: "Les films qu'elle a ___ étaient excellents.", o: ["vus","vu","vue","vues"], a: 0, t: "Accord du participe", e: "COD (м.р. мн.ч.) перед глаголом → vus.", tr: "Фильмы, которые она посмотрела, были отличными." },
+    { q: "Elle s'est ___ les mains.", o: ["lavée","lavé","lavées","laver"], a: 1, t: "Accord du participe", e: "COD после глагола → нет согласования.", tr: "Она помыла руки." },
+    { q: "Elles se sont ___ hier soir. (= позвонили друг другу)", o: ["téléphonées","téléphonés","téléphoné","téléphoner"], a: 2, t: "Accord du participe", e: "Téléphoner à → se = COI → нет согласования.", tr: "Они созвонились вчера вечером." },
+    { q: "C'est le ___ film que j'aie jamais vu.", o: ["meilleur","mieux","plus bon","plus meilleur"], a: 0, t: "Superlatif", e: "Bon → le meilleur.", tr: "Это лучший фильм, который я когда-либо видел(а)." },
+    { q: "Elle travaille ___ de toute l'équipe. (= больше всех)", o: ["le plus","le mieux","le plus possible","davantage"], a: 0, t: "Superlatif", e: "Beaucoup → le plus.", tr: "Она работает больше всех в команде." },
+    { q: "«Prétendre» по-французски означает:", o: ["притворяться","претендовать на должность","утверждать / заявлять","делать вид"], a: 2, t: "Faux amis", e: "Prétendre = утверждать." },
+    { q: "«Sympathique» означает:", o: ["симпатичный (красивый)","приятный / милый","сочувствующий","похожий"], a: 1, t: "Faux amis", e: "Sympathique = приятный по характеру." },
+    { q: "«Formidable» означает:", o: ["ужасный","формальный","потрясающий / замечательный","огромный"], a: 2, t: "Faux amis", e: "Formidable = потрясающий." },
+    { q: "«Je suis confus(e)» означает:", o: ["я запуталась","я смущён / смущена","я злюсь","мне всё равно"], a: 1, t: "Faux amis", e: "Confus(e) = смущённый.", tr: "Мне неловко / я смущён(а)." },
+    { q: "Elle rêve ___ voyager en Asie.", o: ["à","pour","de","que"], a: 2, t: "Verbes + préposition", e: "Rêver de + infinitif.", tr: "Она мечтает путешествовать по Азии." },
+    { q: "Il refuse ___ partir sans elle.", o: ["à","de","pour","que"], a: 1, t: "Verbes + préposition", e: "Refuser de + infinitif.", tr: "Он отказывается уезжать без неё." },
+    { q: "Nous cherchons ___ comprendre la situation.", o: ["de","pour","à","que"], a: 2, t: "Verbes + préposition", e: "Chercher à + infinitif.", tr: "Мы пытаемся понять ситуацию." },
+    { q: "Elle a réussi ___ convaincre son patron.", o: ["de","pour","que","à"], a: 3, t: "Verbes + préposition", e: "Réussir à + infinitif.", tr: "Ей удалось убедить своего начальника." },
+    { q: "Il ___ beau temps aujourd'hui.", o: ["est","a","fait","va"], a: 2, t: "Expressions idiomatiques", e: "Погода → faire.", tr: "Сегодня хорошая погода." },
+    { q: "Elle ___ de son mieux pour t'aider.", o: ["fait","a fait","fera","faisait"], a: 0, t: "Expressions idiomatiques", e: "Faire de son mieux — présent.", tr: "Она старается изо всех сил, чтобы тебе помочь." },
+    { q: "La ville ___ je t'ai parlé est magnifique.", o: ["que","qui","dont","où"], a: 2, t: "Pronoms relatifs", e: "Parler de → dont.", tr: "Город, о котором я тебе рассказывал(а), великолепен." },
+    { q: "C'est l'homme ___ la femme est médecin.", o: ["que","qui","dont","où"], a: 2, t: "Pronoms relatifs", e: "Dont = принадлежность.", tr: "Это мужчина, чья жена врач." },
+    { q: "«Tant que tu travailles, tu progresseras» — «tant que» означает:", o: ["так как","пока / при условии что","поэтому","хотя"], a: 1, t: "Conjonctions", e: "Tant que = пока / до тех пор пока.", tr: "Пока ты работаешь, ты будешь прогрессировать." }
+  ]
+};
+
+const LEVEL_ORDER = ['A1','A2','B1'];
+const GATE = { A1: 0.6, A2: 0.5, B1: 0 };
+
+const L = ['A','B','C','D'];
+let stageIdx = 0;
+let cur = 0;
+let answered = [];
+let userAns = [];
+let allResults = {};
+let showingBanner = true;
+let currentSpeakText = null;
+
+function getApp() { return document.getElementById('app'); }
+
+// Best-effort French text to pronounce for a question: full sentence with blank filled,
+// or a quoted French word/phrase in the question, or the correct option itself if it looks French.
+function speakTextFor(q) {
+  if (q.q.includes('___')) return q.q.replace(/_+/, q.o[q.a]);
+  const quoteMatch = q.q.match(/«([^»]+)»/);
+  if (quoteMatch) return quoteMatch[1];
+  const ans = q.o[q.a];
+  if (!/[а-яА-ЯёЁ]/.test(ans)) return ans;
+  return null;
+}
+
+function speak(text, btn) {
+  if (!('speechSynthesis' in window)) {
+    alert('Синтез речи не поддерживается в этом браузере.');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'fr-FR';
+  u.rate = 0.88;
+  const voices = window.speechSynthesis.getVoices();
+  const frVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('fr'));
+  if (frVoice) u.voice = frVoice;
+  if (btn) { btn.disabled = true; u.onend = () => { btn.disabled = false; }; u.onerror = () => { btn.disabled = false; }; }
+  window.speechSynthesis.speak(u);
+}
+
+// Some browsers load voices asynchronously — warm the list up.
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+}
+
+function renderLevelTrack() {
+  const track = document.getElementById('levelTrack');
+  track.innerHTML = LEVEL_ORDER.map((lvl, i) => {
+    let cls = 'level-pill';
+    if (i < stageIdx || (i === stageIdx && !showingBanner && allResults[lvl])) cls += ' done';
+    if (i === stageIdx) cls += ' active';
+    return `<span class="${cls}">${lvl}</span>`;
+  }).join('');
+}
+
+function startApp() {
+  renderLevelTrack();
+  renderBanner();
+  const hint = document.getElementById('addHint');
+  if (hint) hint.textContent = 'Открой эту страницу в браузере телефона и добавь на главный экран через «Поделиться → На экран Домой» — тест будет запускаться как отдельное приложение.';
+}
+
+function renderBanner() {
+  showingBanner = true;
+  renderLevelTrack();
+  const lvl = LEVEL_ORDER[stageIdx];
+  const intro = {
+    A1: "Начинаем с базового уровня. 40 вопросов: être/avoir, артикли, отрицание, глаголы, aller, вопросительные слова, предлоги места, faux amis, числа, время.",
+    A2: "Хорошо. Переходим к A2. 40 вопросов: passé composé, согласование participe, imparfait, местоимения y/en/lui/leur, gérondif, сравнение, relatifs, conditionnel, futur, faux amis, предлоги времени.",
+    B1: "Идём дальше, к B1. 40 вопросов: plus-que-parfait, conditionnel passé, discours indirect, gérondif/participe présent, négation, предлоги времени, порядок местоимений, согласование participe, superlatif, faux amis, глаголы с предлогами, relatifs."
+  };
+  getApp().innerHTML = `
+    <div class="stage-banner">
+      <h2>Блок ${lvl}</h2>
+      <p>${intro[lvl]}</p>
+      <button class="btn-primary" onclick="beginBlock()">Начать блок →</button>
+    </div>
+  `;
+}
+
+function beginBlock() {
+  showingBanner = false;
+  cur = 0; answered = []; userAns = [];
+  renderQuestion();
+}
+
+function currentBlock() { return BLOCKS[LEVEL_ORDER[stageIdx]]; }
+
+function renderQuestion() {
+  renderLevelTrack();
+  const block = currentBlock();
+  const q = block[cur];
+  const pct = Math.round(cur / block.length * 100);
+  const correct = userAns.filter((u,i) => u === block[i].a).length;
+  const wrong = cur - correct;
+
+  const speakText = speakTextFor(q);
+  currentSpeakText = speakText;
+  const trHtml = q.tr ? `<div class="tr-row"><div class="tr-label">Перевод</div>${q.tr}</div>` : '';
+  const speakHtml = speakText ? `<div class="speak-row"><button class="speak-btn" id="speakbtn" onclick="speak(currentSpeakText, this)">🔊 Слушать произношение</button></div>` : '';
+
+  getApp().innerHTML = `
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span class="progress-label">Блок ${LEVEL_ORDER[stageIdx]} · Прогресс</span>
+        <span class="progress-nums">${cur + 1} / ${block.length}</span>
+      </div>
+      <div class="bar"><div class="bar-fill" style="width:${pct}%"></div></div>
+    </div>
+    <div class="stats">
+      <div class="stat-pill"><div class="val val-correct">${correct}</div><div class="lbl">верно</div></div>
+      <div class="stat-pill"><div class="val val-wrong">${wrong}</div><div class="lbl">ошибок</div></div>
+      <div class="stat-pill"><div class="val val-neutral">${block.length - cur - 1}</div><div class="lbl">осталось</div></div>
+    </div>
+    <div class="q-card">
+      <div class="q-meta">
+        <span class="q-tag">${q.t}</span>
+        <span class="q-number">№ ${cur + 1}</span>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">
+        ${q.o.map((opt, i) => `
+          <button class="opt" id="opt${i}" onclick="choose(${i})">
+            <span class="opt-letter">${L[i]}</span>
+            <span>${opt}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp">
+        <div class="exp-label">Объяснение</div>
+        ${q.e}
+        ${trHtml}
+        ${speakHtml}
+      </div>
+    </div>
+    <div class="nav">
+      <button class="btn-primary" id="nextbtn" onclick="goNext()" ${answered[cur] === undefined ? 'disabled' : ''}>
+        ${cur === block.length - 1 ? 'Завершить блок →' : 'Следующий →'}
+      </button>
+    </div>
+  `;
+  if (answered[cur] !== undefined) restoreState();
+}
+
+function choose(i) {
+  if (answered[cur] !== undefined) return;
+  answered[cur] = true;
+  userAns[cur] = i;
+  const q = currentBlock()[cur];
+  document.querySelectorAll('.opt').forEach((el, idx) => {
+    el.classList.add('disabled');
+    if (idx === q.a) el.classList.add('correct');
+    else if (idx === i) el.classList.add('wrong');
+  });
+  document.getElementById('exp').classList.add('show');
+  document.getElementById('nextbtn').disabled = false;
+}
+
+function restoreState() {
+  const q = currentBlock()[cur];
+  const i = userAns[cur];
+  document.querySelectorAll('.opt').forEach((el, idx) => {
+    el.classList.add('disabled');
+    if (idx === q.a) el.classList.add('correct');
+    else if (idx === i && i !== q.a) el.classList.add('wrong');
+  });
+  document.getElementById('exp').classList.add('show');
+}
+
+function goNext() {
+  const block = currentBlock();
+  if (cur < block.length - 1) { cur++; renderQuestion(); }
+  else finishBlock();
+}
+
+function finishBlock() {
+  const lvl = LEVEL_ORDER[stageIdx];
+  const block = currentBlock();
+  const correct = userAns.filter((u, i) => u === block[i].a).length;
+  const mistakes = userAns.map((u, i) => u !== block[i].a ? i : null).filter(i => i !== null)
+    .map(i => ({ q: block[i].q, t: block[i].t, your: block[i].o[userAns[i]], right: block[i].o[block[i].a], e: block[i].e }));
+
+  allResults[lvl] = { correct, total: block.length, mistakes };
+
+  const share = correct / block.length;
+  const passed = share >= GATE[lvl];
+
+  if (passed && stageIdx < LEVEL_ORDER.length - 1) {
+    stageIdx++;
+    renderBanner();
+  } else {
+    renderFinalResult();
+  }
+}
+
+function renderFinalResult() {
+  renderLevelTrack();
+  const order = LEVEL_ORDER.filter(l => allResults[l]);
+  const last = order[order.length - 1];
+  const lastShare = allResults[last].correct / allResults[last].total;
+  const lastPassed = lastShare >= GATE[last];
+
+  let finalLevel, title, msg;
+  if (last === 'A1' && !lastPassed) {
+    finalLevel = 'Ниже A1'; title = 'Пре-A1 — база ещё формируется';
+    msg = 'Основы être/avoir, артикли и базовая лексика пока плавают. Стоит закрепить фундамент A1, прежде чем двигаться дальше.';
+  } else if (last === 'A1' && lastPassed) {
+    finalLevel = 'A1'; title = 'A1 подтверждён';
+    msg = 'Базовый уровень освоен уверенно.';
+  } else if (last === 'A2' && !lastPassed) {
+    finalLevel = 'A1–A2'; title = 'A1 закреплён, A2 в процессе';
+    msg = 'A1 пройден хорошо, но A2 (passé composé, местоимения y/en/lui/leur, gérondif) пока даётся с трудом. Смотри разбор ошибок ниже.';
+  } else if (last === 'A2' && lastPassed) {
+    finalLevel = 'A2'; title = 'A2 подтверждён';
+    msg = 'Уверенно владеешь A2. До B1 совсем немного.';
+  } else if (last === 'B1' && !lastPassed) {
+    finalLevel = 'A2–B1'; title = 'A2 закреплён, B1 в процессе';
+    msg = 'A1 и A2 пройдены хорошо. B1 (plus-que-parfait, conditionnel passé, discours indirect) — зона роста. Разбери ошибки ниже.';
+  } else {
+    finalLevel = 'B1'; title = 'B1 подтверждён';
+    msg = 'Прошёл все три блока уверенно. Готов двигаться к B2.';
+  }
+
+  const breakdownHtml = order.map(l => {
+    const r = allResults[l];
+    return `<div class="stat-pill"><div class="val">${r.correct}/${r.total}</div><div class="lbl">${l}</div></div>`;
+  }).join('');
+
+  const allMistakes = order.flatMap(l => allResults[l].mistakes.map(m => ({...m, lvl: l})));
+
+  getApp().innerHTML = `
+    <div class="result-screen">
+      <div class="result-hero">
+        <div class="result-level">${finalLevel}</div>
+        <div class="result-title">${title}</div>
+        <div class="result-msg">${msg}</div>
+        <div class="breakdown">${breakdownHtml}</div>
+      </div>
+      ${allMistakes.length === 0 ? `<div class="mistakes-section"><div style="text-align:center;color:var(--correct-border);">🎉 Ни одной ошибки на пройденных блоках!</div></div>` : `
+        <div class="mistakes-section">
+          <div class="mistakes-title">
+            Разбор ошибок
+            <span class="mistakes-badge">${allMistakes.length}</span>
+          </div>
+          ${allMistakes.map(m => `
+            <div class="mistake-item">
+              <span class="mistake-tag">${m.lvl} · ${m.t}</span>
+              <div class="mistake-q">${m.q}</div>
+              <div class="mistake-answers">
+                <div class="ans-row"><span class="ans-badge wrong">Твой ответ</span> ${m.your}</div>
+                <div class="ans-row"><span class="ans-badge correct">Правильно</span> ${m.right}</div>
+              </div>
+              <div class="mistake-exp">${m.e}</div>
+            </div>
+          `).join('')}
+        </div>
+      `}
+      <div class="result-nav">
+        <button class="btn-restart" onclick="restartAll()">Пройти заново</button>
+      </div>
+    </div>
+  `;
+}
+
+function restartAll() {
+  stageIdx = 0; cur = 0; answered = []; userAns = []; allResults = {};
+  startApp();
+}
+
+startApp();
+</script>
+</body>
+</html>
