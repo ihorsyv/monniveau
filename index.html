@@ -13,6 +13,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Niveau FR">
 <meta name="theme-color" content="#2d5a4e">
+<link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAADYUlEQVR4nO3du3ETUQCGUclDCzTBDAEpERkZBVAChbkAd0HslBpowQSMPTxka1f71OdzCtDe4NPvKynw8bAD779+edj6DEx3f3t33PoMmxxAwK/DFoGv9kARv25rxb3oQ0TMKUvGvcgLC5khlgj7Zu4XFDNDLdHKbO8QITPFXGs9y0KLmanmamjSu0LILGHKWl+80GJmKVPauihoMbO0SxsbHbSYWcslrY0KWsysbWxzg4MWM1sZ096goMXM1oY2eDZoMbMXQ1qc/adv2NKLQVtn9uZck88GLWb26qU2XTlIORm0dWbvnmv0v6DFzLU41aorByl/BW2duTb/NmuhSRE0KU9Bu25wrf5s10KTImhSbg4H1w2u32PDFpoUQZMiaFKO7s+UWGhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpLxZ+4H33z+v/cjRHn582/oIZ/1893HrIwzy6cPbVZ9noUkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJuX4/uuXh60PAXOx0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJubm/vTtufQiYw/3t3dFCkyJoUgRNys3h8PvusfVBYIrHhi00KYIm5Slo1w6u1Z/tWmhSBE3KX0G7dnBt/m3WQpPyX9BWmmtxqtWTCy1q9u65Rl05SHk2aCvNXr3U5osLLWr25lyTrhyknA3aSrMXQ1octNCiZmtDGxx85RA1WxnT3qg7tKhZ29jmRn8oFDVruaS1i77lEDVLu7Sxi7+2EzVLmdLWLFH6X4fMYY6RnOWHFWvNVHM1NHuI1pox5h7D2X/6ttYMtUQri8ZnrTllydFbbU3F/bqt9Zd7k+uBuF+HLa6fu7jvCrxhD5+ffgGsxcNcyz5cOAAAAABJRU5ErkJggg==">
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAkElEQVR4nGNkwAJ0o/z+YxOnFFxetokRXQxFgFYW43MIE70tR7eLid6WozuCiZBCWgPGgfA9MhjwEBh1AAs2wcsn3XFq+H8nC6fcOy0rvJY5GIpiiA14CIw6YNQBow4YdcCoA0YdMNoiGnUAE7buEr3A5WWbGAc+BGAuobfFMDuZ0AXoaTkDA1rvGAbo2T0HALfEKj7eVy3qAAAAAElFTkSuQmCC">
 <title>Niveau FR</title>
@@ -272,15 +273,43 @@ const LEVEL_ORDER = ['A1','A2','B1'];
 const GATE = { A1: 0.6, A2: 0.5, B1: 0 };
 
 const L = ['A','B','C','D'];
+const STORAGE_KEY = 'niveau-fr-progress-v1';
 let stageIdx = 0;
 let cur = 0;
 let answered = [];
 let userAns = [];
 let allResults = {};
 let showingBanner = true;
+let finished = false;
 let currentSpeakText = null;
 
 function getApp() { return document.getElementById('app'); }
+
+function saveProgress() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      stageIdx, cur, answered, userAns, allResults, showingBanner, finished
+    }));
+  } catch (e) { /* storage unavailable — progress just won't persist */ }
+}
+
+function loadProgress() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    const s = JSON.parse(raw);
+    if (!s || typeof s.stageIdx !== 'number' || !LEVEL_ORDER[s.stageIdx]) return false;
+    stageIdx = s.stageIdx; cur = s.cur || 0;
+    answered = s.answered || []; userAns = s.userAns || [];
+    allResults = s.allResults || {}; showingBanner = !!s.showingBanner;
+    finished = !!s.finished;
+    return true;
+  } catch (e) { return false; }
+}
+
+function clearProgress() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+}
 
 // Best-effort French text to pronounce for a question: full sentence with blank filled,
 // or a quoted French word/phrase in the question, or the correct option itself if it looks French.
@@ -327,13 +356,17 @@ function renderLevelTrack() {
 
 function startApp() {
   renderLevelTrack();
-  renderBanner();
+  const resumed = loadProgress();
+  if (resumed && finished) renderFinalResult();
+  else if (resumed && !showingBanner) { renderQuestion(); if (answered[cur] !== undefined) restoreState(); }
+  else renderBanner();
   const hint = document.getElementById('addHint');
   if (hint) hint.textContent = 'Открой эту страницу в браузере телефона и добавь на главный экран через «Поделиться → На экран Домой» — тест будет запускаться как отдельное приложение.';
 }
 
 function renderBanner() {
   showingBanner = true;
+  saveProgress();
   renderLevelTrack();
   const lvl = LEVEL_ORDER[stageIdx];
   const intro = {
@@ -353,6 +386,7 @@ function renderBanner() {
 function beginBlock() {
   showingBanner = false;
   cur = 0; answered = []; userAns = [];
+  saveProgress();
   renderQuestion();
 }
 
@@ -426,6 +460,7 @@ function choose(i) {
   });
   document.getElementById('exp').classList.add('show');
   document.getElementById('nextbtn').disabled = false;
+  saveProgress();
 }
 
 function restoreState() {
@@ -441,7 +476,7 @@ function restoreState() {
 
 function goNext() {
   const block = currentBlock();
-  if (cur < block.length - 1) { cur++; renderQuestion(); }
+  if (cur < block.length - 1) { cur++; saveProgress(); renderQuestion(); }
   else finishBlock();
 }
 
@@ -461,6 +496,8 @@ function finishBlock() {
     stageIdx++;
     renderBanner();
   } else {
+    finished = true;
+    saveProgress();
     renderFinalResult();
   }
 }
@@ -536,6 +573,8 @@ function renderFinalResult() {
 
 function restartAll() {
   stageIdx = 0; cur = 0; answered = []; userAns = []; allResults = {};
+  showingBanner = true; finished = false;
+  clearProgress();
   startApp();
 }
 
