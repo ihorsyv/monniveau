@@ -159,16 +159,16 @@ const BLOCKS = {
   A1: [
     { q: "Je ___ étudiant.", o: ["est","suis","es","sommes"], a: 1, t: "Être", e: "Глагол être: je → SUIS. Je suis, tu es, il/elle est, nous sommes, vous êtes, ils/elles sont.", tr: "Я студент." },
     { q: "Elle ___ française.", o: ["suis","sommes","est","êtes"], a: 2, t: "Être", e: "Глагол être: elle → EST.", tr: "Она француженка." },
-    { q: "Выбери ВЕРНОЕ предложение:", o: ["Tu es fatigué ?","Tu est fatigué ?","Tu être fatigué ?","Tu suis fatigué ?"], a: 0, t: "Être", e: "Tu es — единственная правильная форма.", tr: "Ты устал?" },
+    { q: "Выбери ВЕРНОЕ предложение:", o: ["Tu es fatigué ?","Tu est fatigué ?","Tu être fatigué ?","Tu suis fatigué ?"], a: 0, t: "Être", e: "Tu es - единственная правильная форма.", tr: "Ты устал?" },
     { q: "Nous ___ contents de vous voir.", o: ["est","êtes","sont","sommes"], a: 3, t: "Être", e: "Глагол être: nous → SOMMES.", tr: "Мы рады вас видеть." },
     { q: "J'___ un chien et un chat.", o: ["est","ai","as","ont"], a: 1, t: "Avoir", e: "Глагол avoir: je → AI.", tr: "У меня есть собака и кошка." },
     { q: "Il ___ vingt ans.", o: ["est","suis","a","ont"], a: 2, t: "Avoir", e: "Возраст → avoir: il a vingt ans.", tr: "Ему двадцать лет." },
     { q: "Vous ___ de la chance !", o: ["avons","avez","ont","ai"], a: 1, t: "Avoir", e: "Avoir: vous → AVEZ.", tr: "Вам везёт!" },
     { q: "Elles ___ faim après le sport.", o: ["est","sont","ont","avons"], a: 2, t: "Avoir", e: "Голод/жажда/жара → avoir: elles ONT faim.", tr: "Они голодны после спорта." },
-    { q: "Je mange ___ pomme.", o: ["un","le","la","une"], a: 3, t: "Артикли", e: "Pomme — женский род → une.", tr: "Я ем яблоко." },
-    { q: "C'est ___ livre intéressant.", o: ["une","un","la","les"], a: 1, t: "Артикли", e: "Livre — мужской род → un.", tr: "Это интересная книга." },
+    { q: "Je mange ___ pomme.", o: ["un","le","la","une"], a: 3, t: "Артикли", e: "Pomme - женский род → une.", tr: "Я ем яблоко." },
+    { q: "C'est ___ livre intéressant.", o: ["une","un","la","les"], a: 1, t: "Артикли", e: "Livre - мужской род → un.", tr: "Это интересная книга." },
     { q: "Je bois ___ café le matin.", o: ["un","une","le","du"], a: 3, t: "Артикли", e: "Несчитаемое → партитивный du.", tr: "Я пью кофе по утрам." },
-    { q: "Elle écoute ___ musique.", o: ["une","de la","du","la"], a: 1, t: "Артикли", e: "Musique — женский род, несчитаемое → de la.", tr: "Она слушает музыку." },
+    { q: "Elle écoute ___ musique.", o: ["une","de la","du","la"], a: 1, t: "Артикли", e: "Musique - женский род, несчитаемое → de la.", tr: "Она слушает музыку." },
     { q: "Nous avons ___ enfants.", o: ["de","des","les","du"], a: 1, t: "Артикли", e: "Считаемое множественное → des.", tr: "У нас есть дети." },
     { q: "Je ___ parle ___ anglais.", o: ["ne / pas","pas / ne","n' / pas","ne / jamais"], a: 0, t: "Отрицание", e: "ne + глагол + pas.", tr: "Я не говорю по-английски." },
     { q: "Il ne mange ___ de viande.", o: ["pas","point","jamais","plus"], a: 0, t: "Отрицание", e: "Простое отрицание → ne...pas.", tr: "Он не ест мясо." },
@@ -189,21 +189,21 @@ const BLOCKS = {
     { q: "J'habite ___ Paris.", o: ["au","en","à","dans"], a: 2, t: "Предлоги места/времени", e: "Города → à.", tr: "Я живу в Париже." },
     { q: "Elle habite ___ France.", o: ["à","au","en","dans"], a: 2, t: "Предлоги места/времени", e: "Страны женского рода → en.", tr: "Она живёт во Франции." },
     { q: "Il arrive ___ lundi prochain.", o: ["en","au","dans","à"], a: 3, t: "Предлоги места/времени", e: "Дни недели → à.", tr: "Он приезжает в следующий понедельник." },
-    { q: "«Librairie» по-русски — это:", o: ["библиотека","книжный магазин","читальный зал","архив"], a: 1, t: "Faux amis", e: "Librairie = книжный магазин, bibliothèque = библиотека." },
+    { q: "«Librairie» по-русски - это:", o: ["библиотека","книжный магазин","читальный зал","архив"], a: 1, t: "Faux amis", e: "Librairie = книжный магазин, bibliothèque = библиотека." },
     { q: "«Sensible» по-французски означает:", o: ["сенсационный","чувствительный","разумный","смешной"], a: 1, t: "Faux amis", e: "Sensible = чувствительный." },
     { q: "Как сказать «Мне жарко»?", o: ["Je suis chaud.","J'ai chaud.","Je fais chaud.","Il fait chaud moi."], a: 1, t: "Лексика", e: "Жара/холод/голод/жажда → avoir.", tr: "Мне жарко." },
     { q: "«Je suis désolé(e)» означает:", o: ["Я рада/рад","Я устала/устал","Я извиняюсь","Я согласна/согласен"], a: 2, t: "Лексика", e: "Désolé(e) = мне жаль.", tr: "Мне очень жаль / я извиняюсь." },
     { q: "Как будет 80 по-французски?", o: ["huitante","octante","quatre-vingts","quatre-vingts-zéro"], a: 2, t: "Числительные", e: "80 = quatre-vingts." },
     { q: "Который час: «Il est midi et demi» ?", o: ["12:00","12:15","12:30","11:30"], a: 2, t: "Время", e: "Midi et demi = 12:30.", tr: "Сейчас половина первого (12:30)." },
-    { q: "«Avant-hier» — это:", o: ["вчера","позавчера","завтра","послезавтра"], a: 1, t: "Время", e: "Avant-hier = позавчера." },
+    { q: "«Avant-hier» - это:", o: ["вчера","позавчера","завтра","послезавтра"], a: 1, t: "Время", e: "Avant-hier = позавчера." },
     { q: "Выбери правильное приветствие вечером:", o: ["Bonjour !","Bonsoir !","Bonne nuit !","Salut le matin !"], a: 1, t: "Лексика", e: "Bonsoir = добрый вечер.", tr: "Добрый вечер!" }
   ],
   A2: [
     { q: "Elle ___ arrivée hier soir.", o: ["a","est","avait","soit"], a: 1, t: "Passé composé", e: "Глаголы движения → être.", tr: "Она приехала вчера вечером." },
-    { q: "Nous ___ mangé au restaurant samedi.", o: ["sommes","avons","êtes","sont"], a: 1, t: "Passé composé", e: "Manger — переходный → avoir.", tr: "Мы поели в ресторане в субботу." },
-    { q: "Ils ___ partis très tôt ce matin.", o: ["ont","avons","sont","être"], a: 2, t: "Passé composé", e: "Partir — движение → être.", tr: "Они уехали очень рано этим утром." },
+    { q: "Nous ___ mangé au restaurant samedi.", o: ["sommes","avons","êtes","sont"], a: 1, t: "Passé composé", e: "Manger - переходный → avoir.", tr: "Мы поели в ресторане в субботу." },
+    { q: "Ils ___ partis très tôt ce matin.", o: ["ont","avons","sont","être"], a: 2, t: "Passé composé", e: "Partir - движение → être.", tr: "Они уехали очень рано этим утром." },
     { q: "Elle ___ sorti la poubelle. (= вынесла мусор)", o: ["est","a","soit","avait"], a: 1, t: "Passé composé", e: "Sortir с прямым дополнением → avoir.", tr: "Она вынесла мусор." },
-    { q: "Je ___ tombé(e) dans l'escalier.", o: ["ai","avoir","suis","soit"], a: 2, t: "Passé composé", e: "Tomber — движение → être.", tr: "Я упал(а) на лестнице." },
+    { q: "Je ___ tombé(e) dans l'escalier.", o: ["ai","avoir","suis","soit"], a: 2, t: "Passé composé", e: "Tomber - движение → être.", tr: "Я упал(а) на лестнице." },
     { q: "Les lettres qu'il ___ sont importantes.", o: ["a écrites","a écrit","est écrit","a écrits"], a: 0, t: "Accord du participe", e: "COD перед глаголом → согласование.", tr: "Письма, которые он написал, важны." },
     { q: "Marie et Sophie sont ___ au marché.", o: ["allés","allé","allées","aller"], a: 2, t: "Accord du participe", e: "Обе женского рода → allées.", tr: "Мари и Софи пошли на рынок." },
     { q: "La robe qu'elle a ___ est magnifique.", o: ["acheté","achetée","achetés","achetées"], a: 1, t: "Accord du participe", e: "COD перед глаголом (ж.р.) → achetée.", tr: "Платье, которое она купила, великолепное." },
@@ -211,8 +211,8 @@ const BLOCKS = {
     { q: "Hier, il ___ quand je suis sorti.", o: ["pleuvait","a plu","pleut","pleuvra"], a: 0, t: "Imparfait", e: "Фон действия → imparfait.", tr: "Вчера шёл дождь, когда я вышел." },
     { q: "Soudain, quelqu'un ___ à la porte.", o: ["frappait","frappera","a frappé","frappe"], a: 2, t: "Imparfait vs PC", e: "«Soudain» → passé composé.", tr: "Внезапно кто-то постучал в дверь." },
     { q: "Avant, elle ___ du piano tous les jours.", o: ["a joué","jouait","joue","jouera"], a: 1, t: "Imparfait", e: "Привычное действие в прошлом → imparfait.", tr: "Раньше она играла на пианино каждый день." },
-    { q: "Tu vas à Paris ? — Oui, j'___ vais demain.", o: ["en","lui","y","le"], a: 2, t: "Pronom Y", e: "Y заменяет à + lieu.", tr: "Ты едешь в Париж? — Да, я еду туда завтра." },
-    { q: "Tu veux du café ? — Oui, j'___ veux bien.", o: ["y","le","en","lui"], a: 2, t: "Pronom EN", e: "En заменяет du/de la/des.", tr: "Хочешь кофе? — Да, хочу немного." },
+    { q: "Tu vas à Paris ? - Oui, j'___ vais demain.", o: ["en","lui","y","le"], a: 2, t: "Pronom Y", e: "Y заменяет à + lieu.", tr: "Ты едешь в Париж? - Да, я еду туда завтра." },
+    { q: "Tu veux du café ? - Oui, j'___ veux bien.", o: ["y","le","en","lui"], a: 2, t: "Pronom EN", e: "En заменяет du/de la/des.", tr: "Хочешь кофе? - Да, хочу немного." },
     { q: "Elle pense à ses vacances. → Elle ___ pense souvent.", o: ["les","en","lui","y"], a: 3, t: "Pronom Y", e: "Y заменяет à + chose.", tr: "Она думает об отпуске. Она часто об этом думает." },
     { q: "Il parle de son voyage. → Il ___ parle tout le temps.", o: ["y","lui","en","le"], a: 2, t: "Pronom EN", e: "En заменяет de + chose.", tr: "Он рассказывает о своей поездке. Он говорит об этом постоянно." },
     { q: "Je téléphone à Marie. → Je ___ téléphone.", o: ["la","lui","y","en"], a: 1, t: "Pronom LUI", e: "Téléphoner à quelqu'un → lui.", tr: "Я звоню Мари. Я звоню ей." },
@@ -220,15 +220,15 @@ const BLOCKS = {
     { q: "Elle écrit à son ami. → Elle ___ écrit une lettre.", o: ["le","leur","lui","y"], a: 2, t: "Pronom LUI", e: "Écrire à quelqu'un → lui.", tr: "Она пишет другу. Она пишет ему письмо." },
     { q: "Il écoute de la musique ___ faire la cuisine.", o: ["pour","en","à","avec"], a: 1, t: "Gérondif", e: "Gérondif = en + participe présent.", tr: "Он слушает музыку, готовя еду." },
     { q: "___ travaillant beaucoup, elle a réussi ses examens.", o: ["Pour","En","À","Avec"], a: 1, t: "Gérondif", e: "En travaillant = благодаря тому что работала.", tr: "Много работая, она сдала экзамены." },
-    { q: "Elle s'est blessée ___ courant.", o: ["à","pour","en","sans"], a: 2, t: "Gérondif", e: "En courant — обстоятельство образа действия.", tr: "Она поранилась во время бега." },
+    { q: "Elle s'est blessée ___ courant.", o: ["à","pour","en","sans"], a: 2, t: "Gérondif", e: "En courant - обстоятельство образа действия.", tr: "Она поранилась во время бега." },
     { q: "Выбери ПРАВИЛЬНУЮ форму gérondif от «prendre»:", o: ["en prenant","en prenons","en prend","en prendre"], a: 0, t: "Gérondif", e: "En + основа nous + ant: en prenant." },
     { q: "Marie est ___ grande que sa sœur.", o: ["aussi","autant","plus","tant"], a: 2, t: "Comparatif", e: "Plus + adj + que.", tr: "Мари выше своей сестры." },
-    { q: "Il travaille ___ que son collègue.", o: ["plus","autant","aussi","mieux"], a: 1, t: "Comparatif", e: "Autant que — с глаголами.", tr: "Он работает столько же, сколько его коллега." },
+    { q: "Il travaille ___ que son collègue.", o: ["plus","autant","aussi","mieux"], a: 1, t: "Comparatif", e: "Autant que - с глаголами.", tr: "Он работает столько же, сколько его коллега." },
     { q: "Ce film est ___ que le précédent. (= лучше)", o: ["plus bon","meilleur","mieux","plus bien"], a: 1, t: "Comparatif", e: "Bon → meilleur.", tr: "Этот фильм лучше предыдущего." },
     { q: "Elle chante ___ que moi. (= лучше)", o: ["meilleur","plus bien","mieux","plus mieux"], a: 2, t: "Comparatif", e: "Bien → mieux.", tr: "Она поёт лучше меня." },
-    { q: "C'est le livre ___ j'ai lu la semaine dernière.", o: ["qui","dont","où","que"], a: 3, t: "Pronoms relatifs", e: "Que — прямое дополнение.", tr: "Это книга, которую я прочитал(а) на прошлой неделе." },
-    { q: "C'est l'acteur ___ joue dans ce film.", o: ["que","dont","qui","où"], a: 2, t: "Pronoms relatifs", e: "Qui — подлежащее.", tr: "Это актёр, который играет в этом фильме." },
-    { q: "C'est la ville ___ je suis né(e).", o: ["que","qui","dont","où"], a: 3, t: "Pronoms relatifs", e: "Où — место.", tr: "Это город, где я родился/родилась." },
+    { q: "C'est le livre ___ j'ai lu la semaine dernière.", o: ["qui","dont","où","que"], a: 3, t: "Pronoms relatifs", e: "Que - прямое дополнение.", tr: "Это книга, которую я прочитал(а) на прошлой неделе." },
+    { q: "C'est l'acteur ___ joue dans ce film.", o: ["que","dont","qui","où"], a: 2, t: "Pronoms relatifs", e: "Qui - подлежащее.", tr: "Это актёр, который играет в этом фильме." },
+    { q: "C'est la ville ___ je suis né(e).", o: ["que","qui","dont","où"], a: 3, t: "Pronoms relatifs", e: "Où - место.", tr: "Это город, где я родился/родилась." },
     { q: "C'est le film ___ tout le monde parle.", o: ["qui","que","où","dont"], a: 3, t: "Pronoms relatifs", e: "Parler de → dont.", tr: "Это фильм, о котором все говорят." },
     { q: "Si j'avais le temps, je ___.", o: ["voyage","voyagerais","voyagerai","voyager"], a: 1, t: "Conditionnel présent", e: "Si + imparfait → conditionnel présent.", tr: "Если бы у меня было время, я бы путешествовал(а)." },
     { q: "À ta place, je ___ ce médecin.", o: ["consulte","consulterais","consulterai","consultais"], a: 1, t: "Conditionnel présent", e: "«À ta place» → conditionnel.", tr: "На твоём месте я бы обратился(лась) к этому врачу." },
@@ -236,9 +236,9 @@ const BLOCKS = {
     { q: "Elle ___ son travail quand elle aura fini.", o: ["rend","rendra","rendrait","rendait"], a: 1, t: "Futur simple", e: "Обещание/факт в будущем → rendra.", tr: "Она сдаст работу, когда закончит." },
     { q: "«Assister à une conférence» означает:", o: ["помочь на конференции","присутствовать на конференции","организовать конференцию","выступить на конференции"], a: 1, t: "Faux amis", e: "Assister à = присутствовать." },
     { q: "«Je suis passionné(e)» означает:", o: ["я злюсь","я страдаю","я увлечён/увлечена","я пассивный/ая"], a: 2, t: "Faux amis", e: "Passionné(e) = увлечённый." },
-    { q: "«Actuellement» по-французски — это:", o: ["в действительности","в данный момент","на самом деле","активно"], a: 1, t: "Faux amis", e: "Actuellement = сейчас." },
+    { q: "«Actuellement» по-французски - это:", o: ["в действительности","в данный момент","на самом деле","активно"], a: 1, t: "Faux amis", e: "Actuellement = сейчас." },
     { q: "«Éventuellement» означает:", o: ["в конце концов","возможно, может быть","наконец","в случае необходимости"], a: 1, t: "Faux amis", e: "Éventuellement = возможно." },
-    { q: "J'habite ici ___ trois ans.", o: ["il y a","dans","depuis","pendant"], a: 2, t: "Prépositions de temps", e: "Depuis — действие продолжается.", tr: "Я живу здесь уже три года." },
+    { q: "J'habite ici ___ trois ans.", o: ["il y a","dans","depuis","pendant"], a: 2, t: "Prépositions de temps", e: "Depuis - действие продолжается.", tr: "Я живу здесь уже три года." },
     { q: "Il a appelé ___ dix minutes.", o: ["depuis","pendant","il y a","dans"], a: 2, t: "Prépositions de temps", e: "Il y a = тому назад.", tr: "Он позвонил десять минут назад." }
   ],
   B1: [
@@ -248,12 +248,12 @@ const BLOCKS = {
     { q: "Si j'avais su, je ___ te voir.", o: ["serais venu","serai venu","suis venu","viendrai"], a: 0, t: "Conditionnel passé", e: "Si + plus-que-parfait → conditionnel passé.", tr: "Если бы я знал, я бы пришёл тебя навестить." },
     { q: "Tu ___ pu m'appeler ! (= ты мог бы)", o: ["pouvais","pourras","aurais","avais"], a: 2, t: "Conditionnel passé", e: "Упрёк о прошлом → aurais pu.", tr: "Ты мог бы мне позвонить!" },
     { q: "Elle ___ partir plus tôt si elle avait su.", o: ["aurait pu","pouvait","peut","pourrait"], a: 0, t: "Conditionnel passé", e: "Si + plus-que-parfait → conditionnel passé.", tr: "Она могла бы уехать раньше, если бы знала." },
-    { q: "Il dit : «Je suis fatigué.» → Il dit qu'il ___ fatigué.", o: ["est","était","soit","a été"], a: 0, t: "Discours indirect", e: "Dire au présent — времена не меняются.", tr: "Он говорит, что устал." },
+    { q: "Il dit : «Je suis fatigué.» → Il dit qu'il ___ fatigué.", o: ["est","était","soit","a été"], a: 0, t: "Discours indirect", e: "Dire au présent - времена не меняются.", tr: "Он говорит, что устал." },
     { q: "Elle a dit : «Je viendrai demain.» → Elle a dit qu'elle ___ le lendemain.", o: ["viendrait","viendra","vient","venait"], a: 0, t: "Discours indirect", e: "Passé + futur simple → conditionnel présent.", tr: "Она сказала, что придёт на следующий день." },
     { q: "Il m'a demandé : «Tu as mangé ?» → Il m'a demandé si j'___ mangé.", o: ["ai","avais","aurais","aie"], a: 1, t: "Discours indirect", e: "Passé composé → plus-que-parfait.", tr: "Он спросил меня, поел ли я." },
     { q: "___ la rue, il a vu son ami. (одновременность)", o: ["En traversant","Traversant","Traversé","Traverse"], a: 0, t: "Gérondif", e: "Gérondif = en + participe présent.", tr: "Переходя улицу, он увидел друга." },
     { q: "C'est ___ qu'on apprend. (= практикуя)", o: ["en faisant","faisant","fait","faire"], a: 0, t: "Gérondif", e: "C'est en + gérondif + qu'on...", tr: "Учатся, практикуясь." },
-    { q: "Выбери предложение с participe présent (без gérondif):", o: ["En chantant, elle cuisine.","Étant malade, il est resté chez lui.","En lisant, il s'est endormi.","En parlant vite, elle s'est trompée."], a: 1, t: "Participe présent", e: "Participe présent — без «en».", tr: "Будучи больным, он остался дома." },
+    { q: "Выбери предложение с participe présent (без gérondif):", o: ["En chantant, elle cuisine.","Étant malade, il est resté chez lui.","En lisant, il s'est endormi.","En parlant vite, elle s'est trompée."], a: 1, t: "Participe présent", e: "Participe présent - без «en».", tr: "Будучи больным, он остался дома." },
     { q: "Je n'ai ___ compris cette explication. (= абсолютно ничего)", o: ["pas","jamais","rien","plus"], a: 2, t: "Négation", e: "Ne...rien = ничего.", tr: "Я вообще ничего не понял в этом объяснении." },
     { q: "Elle ne parle ___ le français. (= только)", o: ["pas","jamais","plus","que"], a: 3, t: "Négation", e: "Ne...que = только.", tr: "Она говорит только по-французски." },
     { q: "Il ne travaille ___ ici. (= больше не)", o: ["jamais","que","plus","rien"], a: 2, t: "Négation", e: "Ne...plus = больше не.", tr: "Он больше здесь не работает." },
@@ -278,10 +278,10 @@ const BLOCKS = {
     { q: "Nous cherchons ___ comprendre la situation.", o: ["de","pour","à","que"], a: 2, t: "Verbes + préposition", e: "Chercher à + infinitif.", tr: "Мы пытаемся понять ситуацию." },
     { q: "Elle a réussi ___ convaincre son patron.", o: ["de","pour","que","à"], a: 3, t: "Verbes + préposition", e: "Réussir à + infinitif.", tr: "Ей удалось убедить своего начальника." },
     { q: "Il ___ beau temps aujourd'hui.", o: ["est","a","fait","va"], a: 2, t: "Expressions idiomatiques", e: "Погода → faire.", tr: "Сегодня хорошая погода." },
-    { q: "Elle ___ de son mieux pour t'aider.", o: ["fait","a fait","fera","faisait"], a: 0, t: "Expressions idiomatiques", e: "Faire de son mieux — présent.", tr: "Она старается изо всех сил, чтобы тебе помочь." },
+    { q: "Elle ___ de son mieux pour t'aider.", o: ["fait","a fait","fera","faisait"], a: 0, t: "Expressions idiomatiques", e: "Faire de son mieux - présent.", tr: "Она старается изо всех сил, чтобы тебе помочь." },
     { q: "La ville ___ je t'ai parlé est magnifique.", o: ["que","qui","dont","où"], a: 2, t: "Pronoms relatifs", e: "Parler de → dont.", tr: "Город, о котором я тебе рассказывал(а), великолепен." },
     { q: "C'est l'homme ___ la femme est médecin.", o: ["que","qui","dont","où"], a: 2, t: "Pronoms relatifs", e: "Dont = принадлежность.", tr: "Это мужчина, чья жена врач." },
-    { q: "«Tant que tu travailles, tu progresseras» — «tant que» означает:", o: ["так как","пока / при условии что","поэтому","хотя"], a: 1, t: "Conjonctions", e: "Tant que = пока / до тех пор пока.", tr: "Пока ты работаешь, ты будешь прогрессировать." }
+    { q: "«Tant que tu travailles, tu progresseras» - «tant que» означает:", o: ["так как","пока / при условии что","поэтому","хотя"], a: 1, t: "Conjonctions", e: "Tant que = пока / до тех пор пока.", tr: "Пока ты работаешь, ты будешь прогрессировать." }
   ]
 };
 
@@ -289,8 +289,8 @@ const LEVEL_ORDER = ['A1','A2','B1'];
 const GATE = { A1: 0.6, A2: 0.5, B1: 0.5 };
 const LEVEL_MESSAGES = {
   A1: { pass: 'Базовый уровень освоен уверенно.', fail: 'Основы être/avoir, артикли и базовая лексика пока плавают. Стоит закрепить фундамент A1 и попробовать ещё раз.' },
-  A2: { pass: 'Уверенно владеешь A2. Можно двигаться к B1.', fail: 'A2 (passé composé, местоимения y/en/lui/leur, gérondif) пока даётся с трудом — разбери ошибки ниже и попробуй снова.' },
-  B1: { pass: 'B1 пройден уверенно. Готов двигаться к B2.', fail: 'B1 (plus-que-parfait, conditionnel passé, discours indirect) — зона роста. Разбери ошибки ниже и попробуй ещё раз.' }
+  A2: { pass: 'Уверенно владеешь A2. Можно двигаться к B1.', fail: 'A2 (passé composé, местоимения y/en/lui/leur, gérondif) пока даётся с трудом - разбери ошибки ниже и попробуй снова.' },
+  B1: { pass: 'B1 пройден уверенно. Готов двигаться к B2.', fail: 'B1 (plus-que-parfait, conditionnel passé, discours indirect) - зона роста. Разбери ошибки ниже и попробуй ещё раз.' }
 };
 
 const L = ['A','B','C','D'];
@@ -311,7 +311,7 @@ function saveProgress() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
       screen, stageIdx, cur, answered, userAns, allResults, certLevel
     }));
-  } catch (e) { /* storage unavailable — progress just won't persist */ }
+  } catch (e) { /* storage unavailable - progress just won't persist */ }
 }
 
 function loadProgress() {
@@ -359,7 +359,7 @@ function speak(text, btn) {
   window.speechSynthesis.speak(u);
 }
 
-// Some browsers load voices asynchronously — warm the list up.
+// Some browsers load voices asynchronously - warm the list up.
 if ('speechSynthesis' in window) {
   window.speechSynthesis.getVoices();
   window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
@@ -383,7 +383,7 @@ function startApp() {
   else if (resumed && screen === 'banner') renderBanner();
   else renderPicker();
   const hint = document.getElementById('addHint');
-  if (hint) hint.textContent = 'Открой эту страницу в браузере телефона и добавь на главный экран через «Поделиться → На экран Домой» — тест будет запускаться как отдельное приложение.';
+  if (hint) hint.textContent = 'Открой эту страницу в браузере телефона и добавь на главный экран через «Поделиться → На экран Домой» - тест будет запускаться как отдельное приложение.';
 }
 
 function renderPicker() {
@@ -405,7 +405,7 @@ function renderPicker() {
   }).join('');
   getApp().innerHTML = `
     <div class="picker-screen">
-      <div class="picker-intro">Выбери, с какого блока начать — необязательно по порядку. За каждый пройденный блок формируется отдельный сертификат.</div>
+      <div class="picker-intro">Выбери, с какого блока начать - необязательно по порядку. За каждый пройденный блок формируется отдельный сертификат.</div>
       <div class="picker-grid">${cardsHtml}</div>
       ${Object.keys(allResults).length > 0 ? `<div class="picker-reset"><button class="link-reset" onclick="restartAll()">Сбросить весь прогресс</button></div>` : ''}
     </div>
@@ -555,7 +555,7 @@ function renderCertificate(lvl) {
   const share = r.correct / r.total;
   const pct = Math.round(share * 100);
   const passed = share >= GATE[lvl];
-  const title = passed ? `Уровень ${lvl} подтверждён ✓` : `Уровень ${lvl} — есть над чем поработать`;
+  const title = passed ? `Уровень ${lvl} подтверждён ✓` : `Уровень ${lvl} - есть над чем поработать`;
   const msg = passed ? LEVEL_MESSAGES[lvl].pass : LEVEL_MESSAGES[lvl].fail;
   const dateStr = new Date(r.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
   const nextIdx = LEVEL_ORDER.indexOf(lvl) + 1;
