@@ -122,12 +122,47 @@
   .picker-screen { animation: fadeUp 0.4s ease; }
   .picker-intro { text-align: center; font-size: 0.85rem; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.6; max-width: 480px; margin-left: auto; margin-right: auto; }
   .picker-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 0.75rem; }
-  .picker-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.1rem 1.3rem; display: flex; align-items: center; gap: 1rem; animation: fadeUp 0.4s ease; }
+  .picker-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.1rem 1.3rem; display: flex; align-items: center; gap: 1rem; animation: fadeUp 0.4s ease; flex-wrap: wrap; }
   .picker-level { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--accent); font-weight: 600; min-width: 44px; }
   .picker-info { flex: 1; }
   .picker-result { font-size: 0.85rem; color: var(--text); font-weight: 500; }
   .picker-result-empty { color: var(--muted); font-weight: 400; }
   .picker-card .btn-primary { width: auto; padding: 10px 18px; flex: none; }
+  .picker-card-actions { display: flex; gap: 8px; flex: none; }
+  .btn-outline { padding: 10px 16px; border-radius: 10px; background: transparent; color: var(--accent); border: 1px solid var(--accent); font-size: 0.85rem; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.15s; }
+  .btn-outline:hover { background: var(--accent-light); }
+  .cert-controls { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 1.1rem; }
+  .cert-name-field { flex: 1 1 220px; margin-bottom: 0; }
+  .cert-name-field label, .cert-lang-field label { font-size: 0.75rem; color: var(--muted); display: block; margin-bottom: 6px; }
+  .cert-name-input { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; background: var(--card); color: var(--text); box-sizing: border-box; }
+  .cert-lang-field { flex: none; }
+  .lang-toggle { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .lang-toggle button { border: none; padding: 10px 16px; min-height: 40px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; background: var(--card); color: var(--muted); }
+  .lang-toggle button.active { background: var(--accent); color: white; }
+  .cert-paper { width: min(100%, 780px); margin: 0 auto 1.25rem; background: var(--bg); border: 1px solid var(--accent); border-radius: 4px; padding: 2.2rem 2rem; position: relative; box-sizing: border-box; }
+  .cert-paper::before { content: ''; position: absolute; inset: 6px; border: 1px solid var(--border); border-radius: 2px; pointer-events: none; }
+  .cert-inner { position: relative; }
+  .cert-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.1rem; }
+  .cert-kicker { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
+  .cert-brand { font-family: 'Playfair Display', serif; font-size: 1rem; letter-spacing: 0.15em; color: var(--accent); }
+  .cert-hr { width: 28px; height: 1px; background: var(--accent); margin: 0 auto 14px; }
+  .cert-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 600; color: var(--text); text-align: center; margin: 0 0 16px; }
+  .cert-confirm { font-size: 0.8rem; color: var(--muted); text-align: center; }
+  .cert-name { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 600; color: var(--accent); margin: 8px auto 14px; border-bottom: 1px solid var(--border); display: block; width: fit-content; padding-bottom: 6px; min-width: 220px; max-width: 90%; word-break: break-word; text-align: center; }
+  .cert-body { font-size: 0.85rem; color: var(--text); line-height: 1.6; max-width: 520px; margin: 0 auto 18px; text-align: center; }
+  .cert-topics-title { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; text-align: center; }
+  .cert-topics { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 20px; }
+  .cert-topic-chip { font-size: 0.72rem; padding: 4px 10px; border-radius: 20px; background: var(--accent-light); color: var(--accent); }
+  .cert-footer { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 12px; gap: 10px; }
+  .cert-date-block { text-align: left; font-size: 0.68rem; color: var(--muted); }
+  .cert-date-val { font-size: 0.82rem; color: var(--text); margin-top: 2px; }
+  .cert-seal-badge { width: 62px; height: 62px; border-radius: 50%; border: 1.5px solid var(--accent); display: flex; align-items: center; justify-content: center; flex-direction: column; color: var(--accent); font-size: 0.56rem; letter-spacing: 0.04em; text-align: center; transform: rotate(-6deg); line-height: 1.2; flex: none; }
+  .cert-seal-badge b { font-size: 0.95rem; display: block; }
+  .cert-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .btn-download { padding: 12px 24px; border-radius: 10px; background: var(--card); color: var(--accent); border: 1px solid var(--accent); font-size: 0.85rem; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.15s; }
+  .btn-download:hover:not(:disabled) { background: var(--accent-light); }
+  .btn-download:disabled { opacity: 0.5; cursor: default; }
+  .cert-download-error { text-align: center; font-size: 0.78rem; color: var(--wrong-border); margin: -0.75rem 0 1.25rem; }
   .picker-reset { text-align: center; margin-top: 0.75rem; }
   .link-reset { background: none; border: none; color: var(--muted); font-size: 0.78rem; text-decoration: underline; cursor: pointer; font-family: 'DM Sans', sans-serif; padding: 6px; }
   .add-hint { text-align: center; font-size: 0.72rem; color: var(--muted); margin-top: 1.5rem; line-height: 1.6; }
@@ -144,6 +179,8 @@
 </style>
 </head>
 <body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <div class="container">
   <div class="header">
     <div class="header-flag">🇫🇷</div>
@@ -295,6 +332,67 @@ const LEVEL_MESSAGES = {
 
 const L = ['A','B','C','D'];
 const STORAGE_KEY = 'niveau-fr-progress-v2';
+const CERT_PREFS_KEY = 'niveau-fr-cert-prefs';
+
+// Certificate PDF is captured off this fixed width with aspect-ratio forced
+// to landscape A4 (see downloadCertificate's onclone) - the on-screen card
+// stays fluid (no fixed ratio) so it never clips on a narrow phone, while
+// the exported image always has the exact A4 landscape shape.
+const CERT_CAPTURE_WIDTH_PX = 900;
+
+// Topic tags on A1/A2/B1 questions are a deliberate mix: proper French
+// grammar terms (Aller, Avoir, Passé composé...) are left as-is since
+// they read the same in both languages, only the handful of Russian-only
+// tags need a French label for the fr certificate.
+const TOPIC_FR = {
+  'Артикли': 'Articles',
+  'Вопросительные слова': 'Mots interrogatifs',
+  'Время': 'Expressions de temps',
+  'Глаголы 1 группы': 'Verbes du 1er groupe',
+  'Лексика': 'Lexique',
+  'Отрицание': 'Négation',
+  'Предлоги места': 'Prépositions de lieu',
+  'Предлоги места/времени': 'Prépositions de lieu et de temps',
+  'Числительные': 'Nombres',
+};
+
+const CERT_TEXT = {
+  ru: {
+    kicker: 'NIVEAU FR · ТЕСТ НА УРОВЕНЬ ФРАНЦУЗСКОГО',
+    brand: 'NIVEAU FR',
+    title: lvl => `Сертификат о прохождении уровня ${lvl}`,
+    confirm: 'Подтверждаем, что',
+    namePlaceholder: '___________',
+    body: (lvl, correct, total, pct) => `успешно прошёл(ла) блок <b>${lvl}</b> теста на уровень французского с результатом <b>${correct}/${total} (${pct}%)</b>.`,
+    topicsTitle: 'Проверенные темы',
+    dateLabel: 'Дата',
+    nameLabel: 'Имя на сертификате',
+    namePlaceholderInput: 'Как тебя указать',
+    langLabel: 'Язык сертификата',
+    downloadBtn: 'Скачать PDF',
+    downloadingBtn: 'Готовим PDF...',
+    downloadError: 'Не удалось сформировать PDF, попробуй ещё раз.',
+    locale: 'ru-RU',
+  },
+  fr: {
+    kicker: 'NIVEAU FR · TEST DE NIVEAU DE FRANÇAIS',
+    brand: 'NIVEAU FR',
+    title: lvl => `Certificat de réussite du niveau ${lvl}`,
+    confirm: 'Certifie que',
+    namePlaceholder: '___________',
+    body: (lvl, correct, total, pct) => `a réussi avec succès le bloc <b>${lvl}</b> du test de niveau de français avec un résultat de <b>${correct}/${total} (${pct}%)</b>.`,
+    topicsTitle: 'Thèmes vérifiés',
+    dateLabel: 'Date',
+    nameLabel: 'Nom sur le certificat',
+    namePlaceholderInput: 'Comment indiquer ton nom',
+    langLabel: 'Langue du certificat',
+    downloadBtn: 'Télécharger le PDF',
+    downloadingBtn: 'Préparation du PDF...',
+    downloadError: 'Impossible de générer le PDF, réessaie.',
+    locale: 'fr-FR',
+  },
+};
+
 let screen = 'picker'; // 'picker' | 'banner' | 'question' | 'certificate'
 let stageIdx = 0;
 let cur = 0;
@@ -303,6 +401,19 @@ let userAns = [];
 let allResults = {};
 let certLevel = null;
 let currentSpeakText = null;
+let certPrefs = { name: '', lang: 'ru' };
+try {
+  const saved = JSON.parse(localStorage.getItem(CERT_PREFS_KEY) || '{}');
+  certPrefs = { name: saved.name || '', lang: saved.lang === 'fr' ? 'fr' : 'ru' };
+} catch (e) { /* storage unavailable */ }
+
+function saveCertPrefs() {
+  try { localStorage.setItem(CERT_PREFS_KEY, JSON.stringify(certPrefs)); } catch (e) { /* storage unavailable */ }
+}
+
+function topicLabel(t, lang) {
+  return lang === 'fr' && TOPIC_FR[t] ? TOPIC_FR[t] : t;
+}
 
 function getApp() { return document.getElementById('app'); }
 
@@ -395,11 +506,17 @@ function renderPicker() {
     const infoHtml = r
       ? `<div class="picker-result">${r.correct}/${r.total} · ${Math.round(r.correct / r.total * 100)}%</div>`
       : `<div class="picker-result picker-result-empty">ещё не пройден</div>`;
+    const reviewBtn = r
+      ? `<button class="btn-outline" onclick="viewCertificate('${lvl}')">${r.correct / r.total >= GATE[lvl] ? 'Сертификат' : 'Результат'}</button>`
+      : '';
     return `
       <div class="picker-card">
         <div class="picker-level">${lvl}</div>
         <div class="picker-info">${infoHtml}</div>
-        <button class="btn-primary" onclick="selectLevel('${lvl}')">${r ? 'Пройти заново' : 'Начать'} →</button>
+        <div class="picker-card-actions">
+          ${reviewBtn}
+          <button class="btn-primary" onclick="selectLevel('${lvl}')">${r ? 'Пройти заново' : 'Начать'} →</button>
+        </div>
       </div>
     `;
   }).join('');
@@ -549,31 +666,144 @@ function finishBlock() {
   renderCertificate(lvl);
 }
 
+function viewCertificate(lvl) {
+  screen = 'certificate';
+  certLevel = lvl;
+  saveProgress();
+  renderCertificate(lvl);
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function uniqueTopics(block) {
+  return Array.from(new Set(block.map(q => q.t)));
+}
+
+function updateCertName(value) {
+  certPrefs.name = value;
+  saveCertPrefs();
+  const el = document.getElementById('certNameDisplay');
+  if (el) el.textContent = value.trim() || CERT_TEXT[certPrefs.lang].namePlaceholder;
+}
+
+function updateCertLang(lang, lvl) {
+  certPrefs.lang = lang;
+  saveCertPrefs();
+  renderCertificate(lvl);
+}
+
+async function downloadCertificate(lvl) {
+  const paper = document.getElementById('certPaper');
+  const btn = document.getElementById('certDownloadBtn');
+  const errEl = document.getElementById('certDownloadError');
+  if (!paper || !btn || typeof html2canvas === 'undefined' || typeof window.jspdf === 'undefined') return;
+  const t = CERT_TEXT[certPrefs.lang];
+  if (errEl) errEl.style.display = 'none';
+  btn.disabled = true;
+  const prevLabel = btn.textContent;
+  btn.textContent = t.downloadingBtn;
+  try {
+    // Force a fixed landscape-A4 shape on the captured clone only - the
+    // live on-screen card keeps its natural (taller, mobile-friendly)
+    // height so nothing clips, while the exported image always has the
+    // exact ratio needed to fill the PDF page edge to edge.
+    const canvas = await html2canvas(paper, {
+      scale: 2,
+      backgroundColor: '#f7f5f0',
+      windowWidth: CERT_CAPTURE_WIDTH_PX + 100,
+      onclone: (_doc, el) => {
+        el.style.width = `${CERT_CAPTURE_WIDTH_PX}px`;
+        el.style.aspectRatio = '297 / 210';
+      },
+    });
+    const imgData = canvas.toDataURL('image/jpeg', 0.92);
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4', compress: true });
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight);
+    const name = (certPrefs.name || 'niveau-fr').trim().replace(/\s+/g, '_') || 'niveau-fr';
+    pdf.save(`sertifikat-${lvl}-${name}.pdf`);
+  } catch (e) {
+    if (errEl) errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = prevLabel;
+  }
+}
+
 function renderCertificate(lvl) {
   renderLevelTrack();
   const r = allResults[lvl];
   const share = r.correct / r.total;
   const pct = Math.round(share * 100);
   const passed = share >= GATE[lvl];
-  const title = passed ? `Уровень ${lvl} подтверждён ✓` : `Уровень ${lvl} - есть над чем поработать`;
   const msg = passed ? LEVEL_MESSAGES[lvl].pass : LEVEL_MESSAGES[lvl].fail;
-  const dateStr = new Date(r.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
   const nextIdx = LEVEL_ORDER.indexOf(lvl) + 1;
   const nextLvl = LEVEL_ORDER[nextIdx];
+  const topics = uniqueTopics(BLOCKS[lvl]);
+  const t = CERT_TEXT[certPrefs.lang];
+  const dateStr = new Date(r.date).toLocaleDateString(t.locale, { day: 'numeric', month: 'long', year: 'numeric' });
+
+  const certHtml = passed ? `
+    <div class="cert-controls">
+      <div class="cert-name-field">
+        <label for="certNameInput">${t.nameLabel}</label>
+        <input id="certNameInput" class="cert-name-input" value="${escapeHtml(certPrefs.name)}" oninput="updateCertName(this.value)" placeholder="${t.namePlaceholderInput}">
+      </div>
+      <div class="cert-lang-field">
+        <label>${t.langLabel}</label>
+        <div class="lang-toggle">
+          <button type="button" class="${certPrefs.lang === 'ru' ? 'active' : ''}" onclick="updateCertLang('ru','${lvl}')">RU</button>
+          <button type="button" class="${certPrefs.lang === 'fr' ? 'active' : ''}" onclick="updateCertLang('fr','${lvl}')">FR</button>
+        </div>
+      </div>
+    </div>
+    <div class="cert-paper" id="certPaper">
+      <div class="cert-inner">
+        <div class="cert-top-row">
+          <div class="cert-kicker">${t.kicker}</div>
+          <div class="cert-brand">${t.brand}</div>
+        </div>
+        <div class="cert-hr"></div>
+        <div class="cert-title">${t.title(lvl)}</div>
+        <div class="cert-confirm">${t.confirm}</div>
+        <div class="cert-name" id="certNameDisplay">${certPrefs.name ? escapeHtml(certPrefs.name) : t.namePlaceholder}</div>
+        <div class="cert-body">${t.body(lvl, r.correct, r.total, pct)}</div>
+        <div class="cert-topics-title">${t.topicsTitle}</div>
+        <div class="cert-topics">${topics.map(top => `<span class="cert-topic-chip">${escapeHtml(topicLabel(top, certPrefs.lang))}</span>`).join('')}</div>
+        <div class="cert-footer">
+          <div class="cert-date-block">
+            <div>${t.dateLabel}</div>
+            <div class="cert-date-val">${dateStr}</div>
+          </div>
+          <div class="cert-seal-badge"><b>${lvl}</b>NIVEAU FR</div>
+        </div>
+      </div>
+    </div>
+    <div class="cert-actions">
+      <button class="btn-download" id="certDownloadBtn" onclick="downloadCertificate('${lvl}')">${t.downloadBtn}</button>
+    </div>
+    <div class="cert-download-error" id="certDownloadError" style="display:none;">${t.downloadError}</div>
+  ` : `
+    <div class="result-hero cert-hero">
+      <div class="cert-seal">📄</div>
+      <div class="result-level">${lvl}</div>
+      <div class="result-title">Уровень ${lvl} - есть над чем поработать</div>
+      <div class="result-msg">${msg}</div>
+      <div class="breakdown">
+        <div class="stat-pill"><div class="val">${r.correct}/${r.total}</div><div class="lbl">верно</div></div>
+        <div class="stat-pill"><div class="val">${pct}%</div><div class="lbl">результат</div></div>
+      </div>
+      <div class="cert-date">Проходной порог для сертификата: ${Math.round(GATE[lvl] * 100)}%</div>
+    </div>
+  `;
 
   getApp().innerHTML = `
     <div class="result-screen">
-      <div class="result-hero cert-hero">
-        <div class="cert-seal">${passed ? '🏅' : '📄'}</div>
-        <div class="result-level">${lvl}</div>
-        <div class="result-title">${title}</div>
-        <div class="result-msg">${msg}</div>
-        <div class="breakdown">
-          <div class="stat-pill"><div class="val">${r.correct}/${r.total}</div><div class="lbl">верно</div></div>
-          <div class="stat-pill"><div class="val">${pct}%</div><div class="lbl">результат</div></div>
-        </div>
-        <div class="cert-date">Сертификат сформирован ${dateStr}</div>
-      </div>
+      ${certHtml}
       ${r.mistakes.length === 0 ? `<div class="mistakes-section"><div style="text-align:center;color:var(--correct-border);">🎉 Ни одной ошибки в этом блоке!</div></div>` : `
         <div class="mistakes-section">
           <div class="mistakes-title">
