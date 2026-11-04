@@ -140,7 +140,7 @@
   .lang-toggle button { border: none; padding: 10px 16px; min-height: 40px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; background: var(--card); color: var(--muted); }
   .lang-toggle button.active { background: var(--accent); color: white; }
   .cert-paper { width: min(100%, 940px); margin: 0 auto 1.25rem; background: var(--bg); border: 2px solid var(--accent); border-radius: 4px; padding: 2.4rem; position: relative; box-sizing: border-box; display: flex; }
-  .cert-paper::before { content: ''; position: absolute; inset: 8px; border: 1px solid var(--border); border-radius: 2px; pointer-events: none; }
+  .cert-paper::before { content: ''; position: absolute; top: 8px; right: 8px; bottom: 8px; left: 8px; border: 1px solid var(--border); border-radius: 2px; pointer-events: none; }
   .cert-corner { position: absolute; width: 30px; height: 30px; border: 2px solid var(--accent); pointer-events: none; }
   .cert-corner.tl { top: 14px; left: 14px; border-right: none; border-bottom: none; }
   .cert-corner.tr { top: 14px; right: 14px; border-left: none; border-bottom: none; }
@@ -353,10 +353,10 @@ const L = ['A','B','C','D'];
 const STORAGE_KEY = 'niveau-fr-progress-v2';
 const CERT_PREFS_KEY = 'niveau-fr-cert-prefs';
 
-// Certificate PDF is captured off this fixed width with aspect-ratio forced
-// to landscape A4 (see downloadCertificate's onclone) - the on-screen card
-// stays fluid (no fixed ratio) so it never clips on a narrow phone, while
-// the exported image always has the exact A4 landscape shape.
+// Certificate PDF is captured off a detached clone forced to this fixed
+// width and a landscape-A4 height (see downloadCertificate) - the on-screen
+// card stays fluid (no fixed ratio) so it never clips on a narrow phone,
+// while the exported image always has the exact A4 landscape shape.
 const CERT_CAPTURE_WIDTH_PX = 900;
 
 // Topic tags on A1/A2/B1 questions are a deliberate mix: proper French
@@ -723,20 +723,24 @@ async function downloadCertificate(lvl) {
   btn.disabled = true;
   const prevLabel = btn.textContent;
   btn.textContent = t.downloadingBtn;
+  // Capture a detached clone sized to the exact landscape-A4 shape instead of
+  // resizing via html2canvas's own onclone hook - that hook resizes the DOM
+  // after html2canvas has already measured it, which leaves absolutely
+  // positioned pseudo-elements (like the inset border) stuck at their
+  // pre-resize size and produces a stray seam in the rendered image. Building
+  // our own pre-sized clone means html2canvas measures the final layout once.
+  const captureHeight = Math.round(CERT_CAPTURE_WIDTH_PX * 210 / 297);
+  const clone = paper.cloneNode(true);
+  clone.id = '';
+  clone.style.position = 'fixed';
+  clone.style.top = '0';
+  clone.style.left = '-99999px';
+  clone.style.margin = '0';
+  clone.style.width = `${CERT_CAPTURE_WIDTH_PX}px`;
+  clone.style.height = `${captureHeight}px`;
+  document.body.appendChild(clone);
   try {
-    // Force a fixed landscape-A4 shape on the captured clone only - the
-    // live on-screen card keeps its natural (taller, mobile-friendly)
-    // height so nothing clips, while the exported image always has the
-    // exact ratio needed to fill the PDF page edge to edge.
-    const canvas = await html2canvas(paper, {
-      scale: 2,
-      backgroundColor: '#f7f5f0',
-      windowWidth: CERT_CAPTURE_WIDTH_PX + 100,
-      onclone: (_doc, el) => {
-        el.style.width = `${CERT_CAPTURE_WIDTH_PX}px`;
-        el.style.aspectRatio = '297 / 210';
-      },
-    });
+    const canvas = await html2canvas(clone, { scale: 2, backgroundColor: '#f7f5f0' });
     const imgData = canvas.toDataURL('image/jpeg', 0.92);
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4', compress: true });
@@ -748,6 +752,7 @@ async function downloadCertificate(lvl) {
   } catch (e) {
     if (errEl) errEl.style.display = 'block';
   } finally {
+    clone.remove();
     btn.disabled = false;
     btn.textContent = prevLabel;
   }
