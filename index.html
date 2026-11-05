@@ -341,8 +341,41 @@ const BLOCKS = {
   ]
 };
 
+// Практическое задание (перевод RU → FR) после MCQ-теста уровня. Самопроверка:
+// пользователь сверяет свой перевод с эталоном и честно отмечает результат.
+const PRACTICAL = {
+  A1: [
+    { ru: "На улице много машин.", fr: "Il y a beaucoup de voitures dans la rue." },
+    { ru: "Я не ем мясо.", fr: "Je ne mange pas de viande." },
+    { ru: "Я покупаю рыбу, муку и масло.", fr: "J'achète du poisson, de la farine et de l'huile." },
+    { ru: "Что вы здесь делаете?", fr: "Qu'est-ce que vous faites ici ?" },
+    { ru: "Вы собираетесь кататься на лыжах в горах этой зимой?", fr: "Vous allez faire du ski à la montagne cet hiver ?" },
+    { ru: "Где кот? — Он под столом.", fr: "Où est le chat ? — Il est sous la table." },
+    { ru: "Они делают много ошибок.", fr: "Ils font beaucoup d'erreurs." },
+    { ru: "Родители приезжают в воскресенье.", fr: "Les parents arrivent dimanche." },
+    { ru: "Тебе нужна эта книга?", fr: "Tu as besoin de ce livre ?" },
+    { ru: "У тебя болит голова?", fr: "Tu as mal à la tête ?" },
+    { ru: "Я не могу открыть окно.", fr: "Je ne peux pas ouvrir la fenêtre." },
+    { ru: "У них нет детей.", fr: "Ils n'ont pas d'enfants." },
+    { ru: "Я мою руки.", fr: "Je me lave les mains." },
+    { ru: "Они никогда не приходят вовремя.", fr: "Ils n'arrivent jamais à l'heure." },
+    { ru: "Каждое утро я встаю в 7, принимаю душ, одеваюсь и сразу иду на работу.", fr: "Chaque matin, je me lève à 7 heures, je prends une douche, je m'habille et je vais directement au travail." },
+    { ru: "Мои родители работают на заводе.", fr: "Mes parents travaillent à l'usine." },
+    { ru: "Нужно купить хлеба и мяса.", fr: "Il faut acheter du pain et de la viande." },
+    { ru: "Мне не нужна твоя помощь.", fr: "Je n'ai pas besoin de ton aide." },
+    { ru: "Я ничего не понимаю.", fr: "Je ne comprends rien." },
+    { ru: "Я знаю этого человека, но я не знаю, где он живёт.", fr: "Je connais cet homme, mais je ne sais pas où il habite." },
+    { ru: "Они умеют кататься на велосипеде, но сейчас не могут — они больны.", fr: "Ils savent faire du vélo, mais maintenant ils ne peuvent pas — ils sont malades." },
+    { ru: "В парке в это время нет людей.", fr: "Il n'y a personne dans le parc à cette heure." },
+    { ru: "О чём ты сейчас думаешь?", fr: "À quoi penses-tu en ce moment ?" },
+    { ru: "Мы летом едем в Испанию.", fr: "Nous allons en Espagne cet été." },
+    { ru: "Я иду из театра, а мои друзья идут с работы.", fr: "Je viens du théâtre, et mes amis viennent du travail." },
+  ],
+};
+const PRACTICAL_GATE = 0.8;
+
 const LEVEL_ORDER = ['A1','A2','B1'];
-const GATE = { A1: 0.6, A2: 0.5, B1: 0.5 };
+const GATE = { A1: 0.8, A2: 0.5, B1: 0.5 };
 const LEVEL_MESSAGES = {
   A1: { pass: 'Базовый уровень освоен уверенно.', fail: 'Основы être/avoir, артикли и базовая лексика пока плавают. Стоит закрепить фундамент A1 и попробовать ещё раз.' },
   A2: { pass: 'Уверенно владеешь A2. Можно двигаться к B1.', fail: 'A2 (passé composé, местоимения y/en/lui/leur, gérondif) пока даётся с трудом - разбери ошибки ниже и попробуй снова.' },
@@ -383,6 +416,7 @@ const CERT_TEXT = {
     confirm: 'Подтверждаем, что',
     namePlaceholder: '___________',
     body: (lvl, correct, total, pct) => `успешно прошёл(ла) блок <b>${lvl}</b> теста на уровень французского с результатом <b>${correct}/${total} (${pct}%)</b>.`,
+    bodyPractical: (correct, total, pct) => ` Практическое задание на перевод выполнено на <b>${pct}%</b> (${correct}/${total}).`,
     topicsTitle: 'Проверенные темы',
     dateLabel: 'Дата',
     nameLabel: 'Имя на сертификате',
@@ -400,6 +434,7 @@ const CERT_TEXT = {
     confirm: 'Certifie que',
     namePlaceholder: '___________',
     body: (lvl, correct, total, pct) => `a réussi avec succès le bloc <b>${lvl}</b> du test de niveau de français avec un résultat de <b>${correct}/${total} (${pct}%)</b>.`,
+    bodyPractical: (correct, total, pct) => ` L'exercice pratique de traduction a été réussi à <b>${pct}%</b> (${correct}/${total}).`,
     topicsTitle: 'Thèmes vérifiés',
     dateLabel: 'Date',
     nameLabel: 'Nom sur le certificat',
@@ -412,13 +447,16 @@ const CERT_TEXT = {
   },
 };
 
-let screen = 'picker'; // 'picker' | 'banner' | 'question' | 'certificate'
+let screen = 'picker'; // 'picker' | 'banner' | 'question' | 'practicalBanner' | 'practical' | 'certificate'
 let stageIdx = 0;
 let cur = 0;
 let answered = [];
 let userAns = [];
 let allResults = {};
 let certLevel = null;
+let practicalCur = 0;
+let practicalAnswers = [];
+let practicalShowAnswer = false;
 let currentSpeakText = null;
 let certPrefs = { name: '', lang: 'ru' };
 try {
@@ -436,10 +474,22 @@ function topicLabel(t, lang) {
 
 function getApp() { return document.getElementById('app'); }
 
+function isCertEligible(lvl) {
+  const r = allResults[lvl];
+  if (!r) return false;
+  if (r.correct / r.total < GATE[lvl]) return false;
+  if (PRACTICAL[lvl]) {
+    if (!r.practical) return false;
+    if (r.practical.correct / r.practical.total < PRACTICAL_GATE) return false;
+  }
+  return true;
+}
+
 function saveProgress() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      screen, stageIdx, cur, answered, userAns, allResults, certLevel
+      screen, stageIdx, cur, answered, userAns, allResults, certLevel,
+      practicalCur, practicalAnswers, practicalShowAnswer
     }));
   } catch (e) { /* storage unavailable - progress just won't persist */ }
 }
@@ -454,6 +504,8 @@ function loadProgress() {
     stageIdx = s.stageIdx; cur = s.cur || 0;
     answered = s.answered || []; userAns = s.userAns || [];
     allResults = s.allResults || {}; certLevel = s.certLevel || null;
+    practicalCur = s.practicalCur || 0; practicalAnswers = s.practicalAnswers || [];
+    practicalShowAnswer = !!s.practicalShowAnswer;
     return true;
   } catch (e) { return false; }
 }
@@ -509,6 +561,8 @@ function startApp() {
   const resumed = loadProgress();
   renderLevelTrack();
   if (resumed && screen === 'certificate' && certLevel) renderCertificate(certLevel);
+  else if (resumed && screen === 'practical') renderPracticalQuestion(LEVEL_ORDER[stageIdx]);
+  else if (resumed && screen === 'practicalBanner') renderPracticalBanner(LEVEL_ORDER[stageIdx]);
   else if (resumed && screen === 'question') { renderQuestion(); if (answered[cur] !== undefined) restoreState(); }
   else if (resumed && screen === 'banner') renderBanner();
   else renderPicker();
@@ -523,10 +577,10 @@ function renderPicker() {
   const cardsHtml = LEVEL_ORDER.map(lvl => {
     const r = allResults[lvl];
     const infoHtml = r
-      ? `<div class="picker-result">${r.correct}/${r.total} · ${Math.round(r.correct / r.total * 100)}%</div>`
+      ? `<div class="picker-result">${r.correct}/${r.total} · ${Math.round(r.correct / r.total * 100)}%${r.practical ? ` · практика ${Math.round(r.practical.correct / r.practical.total * 100)}%` : ''}</div>`
       : `<div class="picker-result picker-result-empty">ещё не пройден</div>`;
     const reviewBtn = r
-      ? `<button class="btn-outline" onclick="viewCertificate('${lvl}')">${r.correct / r.total >= GATE[lvl] ? 'Сертификат' : 'Результат'}</button>`
+      ? `<button class="btn-outline" onclick="viewCertificate('${lvl}')">${isCertEligible(lvl) ? 'Сертификат' : 'Результат'}</button>`
       : '';
     return `
       <div class="picker-card">
@@ -559,7 +613,7 @@ function renderBanner() {
   renderLevelTrack();
   const lvl = LEVEL_ORDER[stageIdx];
   const intro = {
-    A1: "Базовый уровень. 40 вопросов: être/avoir, артикли, отрицание, глаголы, aller, вопросительные слова, предлоги места, faux amis, числа, время.",
+    A1: "Базовый уровень. 40 вопросов: être/avoir, артикли, отрицание, глаголы, aller, вопросительные слова, предлоги места, faux amis, числа, время. После теста - дополнительное практическое задание на перевод. Для сертификата нужно 32/40 (80%) в тесте и не менее 80% в практическом задании.",
     A2: "Уровень A2. 40 вопросов: passé composé, согласование participe, imparfait, местоимения y/en/lui/leur, gérondif, сравнение, relatifs, conditionnel, futur, faux amis, предлоги времени.",
     B1: "Уровень B1. 40 вопросов: plus-que-parfait, conditionnel passé, discours indirect, gérondif/participe présent, négation, предлоги времени, порядок местоимений, согласование participe, superlatif, faux amis, глаголы с предлогами, relatifs."
   };
@@ -677,8 +731,116 @@ function finishBlock() {
   const mistakes = userAns.map((u, i) => u !== block[i].a ? i : null).filter(i => i !== null)
     .map(i => ({ q: block[i].q, t: block[i].t, your: block[i].o[userAns[i]], right: block[i].o[block[i].a], e: block[i].e }));
 
-  allResults[lvl] = { correct, total: block.length, mistakes, date: new Date().toISOString() };
+  allResults[lvl] = { correct, total: block.length, mistakes, date: new Date().toISOString(), practical: null };
 
+  if (PRACTICAL[lvl]) {
+    renderPracticalBanner(lvl);
+  } else {
+    screen = 'certificate';
+    certLevel = lvl;
+    saveProgress();
+    renderCertificate(lvl);
+  }
+}
+
+function renderPracticalBanner(lvl) {
+  screen = 'practicalBanner';
+  saveProgress();
+  renderLevelTrack();
+  const items = PRACTICAL[lvl];
+  getApp().innerHTML = `
+    <div class="stage-banner">
+      <h2>Практическое задание</h2>
+      <p>Переведи ${items.length} предложений с русского на французский - письменно или устно, без переводчика и словаря. После каждого предложения сверь свой вариант с эталонным переводом и честно отметь, справился ли ты.</p>
+      <p style="margin-top:0.75rem;">Для сертификата по блоку ${lvl} нужно набрать минимум ${Math.round(GATE[lvl] * 100)}% в тесте и не менее ${Math.round(PRACTICAL_GATE * 100)}% в этом задании.</p>
+      <button class="btn-primary" onclick="startPractical('${lvl}')">Начать задание →</button>
+    </div>
+  `;
+}
+
+function startPractical(lvl) {
+  screen = 'practical';
+  practicalCur = 0;
+  practicalAnswers = [];
+  practicalShowAnswer = false;
+  saveProgress();
+  renderPracticalQuestion(lvl);
+}
+
+function renderPracticalQuestion(lvl) {
+  renderLevelTrack();
+  const items = PRACTICAL[lvl];
+  const item = items[practicalCur];
+  const pct = Math.round(practicalCur / items.length * 100);
+  const answered_ = practicalAnswers[practicalCur] !== undefined;
+
+  getApp().innerHTML = `
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span class="progress-label">Практическое задание · Перевод</span>
+        <span class="progress-nums">${practicalCur + 1} / ${items.length}</span>
+      </div>
+      <div class="bar"><div class="bar-fill" style="width:${pct}%"></div></div>
+    </div>
+    <div class="q-card">
+      <div class="q-meta">
+        <span class="q-tag">Перевод RU → FR</span>
+        <span class="q-number">№ ${practicalCur + 1}</span>
+      </div>
+      <div class="q-text">${escapeHtml(item.ru)}</div>
+      ${!practicalShowAnswer && !answered_ ? `
+        <button class="btn-primary" onclick="revealPractical()">Показать эталонный перевод</button>
+      ` : `
+        <div class="explanation show">
+          <div class="exp-label">Эталонный перевод</div>
+          ${escapeHtml(item.fr)}
+        </div>
+        <div class="options" style="margin-top:12px;">
+          <button class="opt ${answered_ ? 'disabled' : ''} ${practicalAnswers[practicalCur] === true ? 'correct' : ''}" onclick="markPractical(true,'${lvl}')">
+            <span class="opt-letter">✓</span><span>Я перевёл(а) верно</span>
+          </button>
+          <button class="opt ${answered_ ? 'disabled' : ''} ${practicalAnswers[practicalCur] === false ? 'wrong' : ''}" onclick="markPractical(false,'${lvl}')">
+            <span class="opt-letter">✗</span><span>Я ошибся / ошиблась</span>
+          </button>
+        </div>
+      `}
+    </div>
+    <div class="nav">
+      <button class="btn-primary" id="pracNextBtn" onclick="goNextPractical('${lvl}')" ${answered_ ? '' : 'disabled'}>
+        ${practicalCur === items.length - 1 ? 'Завершить задание →' : 'Следующее →'}
+      </button>
+    </div>
+  `;
+}
+
+function revealPractical() {
+  practicalShowAnswer = true;
+  renderPracticalQuestion(LEVEL_ORDER[stageIdx]);
+}
+
+function markPractical(isCorrect, lvl) {
+  if (practicalAnswers[practicalCur] !== undefined) return;
+  practicalAnswers[practicalCur] = isCorrect;
+  saveProgress();
+  renderPracticalQuestion(lvl);
+}
+
+function goNextPractical(lvl) {
+  const items = PRACTICAL[lvl];
+  if (practicalCur < items.length - 1) {
+    practicalCur++;
+    practicalShowAnswer = false;
+    saveProgress();
+    renderPracticalQuestion(lvl);
+  } else {
+    finishPractical(lvl);
+  }
+}
+
+function finishPractical(lvl) {
+  const items = PRACTICAL[lvl];
+  const correct = practicalAnswers.filter(Boolean).length;
+  allResults[lvl].practical = { correct, total: items.length };
   screen = 'certificate';
   certLevel = lvl;
   saveProgress();
@@ -763,13 +925,19 @@ function renderCertificate(lvl) {
   const r = allResults[lvl];
   const share = r.correct / r.total;
   const pct = Math.round(share * 100);
-  const passed = share >= GATE[lvl];
-  const msg = passed ? LEVEL_MESSAGES[lvl].pass : LEVEL_MESSAGES[lvl].fail;
+  const testPassed = share >= GATE[lvl];
+  const hasPractical = !!PRACTICAL[lvl];
+  const practicalDone = hasPractical && !!r.practical;
+  const practicalPct = practicalDone ? Math.round(r.practical.correct / r.practical.total * 100) : null;
+  const practicalPassed = !hasPractical || (practicalDone && r.practical.correct / r.practical.total >= PRACTICAL_GATE);
+  const passed = testPassed && practicalPassed;
+  const msg = testPassed ? LEVEL_MESSAGES[lvl].pass : LEVEL_MESSAGES[lvl].fail;
   const nextIdx = LEVEL_ORDER.indexOf(lvl) + 1;
   const nextLvl = LEVEL_ORDER[nextIdx];
   const topics = uniqueTopics(BLOCKS[lvl]);
   const t = CERT_TEXT[certPrefs.lang];
   const dateStr = new Date(r.date).toLocaleDateString(t.locale, { day: 'numeric', month: 'long', year: 'numeric' });
+  const practicalBodyHtml = (hasPractical && practicalDone && t.bodyPractical) ? t.bodyPractical(r.practical.correct, r.practical.total, practicalPct) : '';
 
   const certHtml = passed ? `
     <div class="cert-controls">
@@ -800,7 +968,7 @@ function renderCertificate(lvl) {
           <div class="cert-title">${t.title(lvl)}</div>
           <div class="cert-confirm">${t.confirm}</div>
           <div class="cert-name" id="certNameDisplay">${certPrefs.name ? escapeHtml(certPrefs.name) : t.namePlaceholder}</div>
-          <div class="cert-body">${t.body(lvl, r.correct, r.total, pct)}</div>
+          <div class="cert-body">${t.body(lvl, r.correct, r.total, pct)}${practicalBodyHtml}</div>
           <div class="cert-topics-title">${t.topicsTitle}</div>
           <div class="cert-topics">${topics.map(top => `<span class="cert-topic-chip">${escapeHtml(topicLabel(top, certPrefs.lang))}</span>`).join('')}</div>
         </div>
@@ -821,13 +989,18 @@ function renderCertificate(lvl) {
     <div class="result-hero cert-hero">
       <div class="cert-seal">📄</div>
       <div class="result-level">${lvl}</div>
-      <div class="result-title">Уровень ${lvl} - есть над чем поработать</div>
-      <div class="result-msg">${msg}</div>
+      <div class="result-title">${!testPassed ? `Уровень ${lvl} - есть над чем поработать` : 'Тест сдан - осталось практическое задание'}</div>
+      <div class="result-msg">${!testPassed ? msg : (hasPractical && !practicalDone
+        ? 'Чтобы получить сертификат, выполни дополнительное практическое задание на перевод.'
+        : `Практическое задание выполнено на ${practicalPct}% - для сертификата нужно не менее ${Math.round(PRACTICAL_GATE * 100)}%. Попробуй пересдать его.`)}</div>
       <div class="breakdown">
-        <div class="stat-pill"><div class="val">${r.correct}/${r.total}</div><div class="lbl">верно</div></div>
-        <div class="stat-pill"><div class="val">${pct}%</div><div class="lbl">результат</div></div>
+        <div class="stat-pill"><div class="val">${r.correct}/${r.total}</div><div class="lbl">тест</div></div>
+        <div class="stat-pill"><div class="val">${pct}%</div><div class="lbl">результат теста</div></div>
+        ${practicalDone ? `<div class="stat-pill"><div class="val">${practicalPct}%</div><div class="lbl">практика</div></div>` : ''}
       </div>
-      <div class="cert-date">Проходной порог для сертификата: ${Math.round(GATE[lvl] * 100)}%</div>
+      <div class="cert-date">Для сертификата нужно: тест ≥ ${Math.round(GATE[lvl] * 100)}%${hasPractical ? ` и практическое задание ≥ ${Math.round(PRACTICAL_GATE * 100)}%` : ''}.</div>
+      ${testPassed && hasPractical && !practicalDone ? `<div style="margin-top:1rem;"><button class="btn-primary" onclick="renderPracticalBanner('${lvl}')">Начать практическое задание →</button></div>` : ''}
+      ${testPassed && hasPractical && practicalDone && !practicalPassed ? `<div style="margin-top:1rem;"><button class="btn-primary" onclick="startPractical('${lvl}')">Повторить практическое задание →</button></div>` : ''}
     </div>
   `;
 
