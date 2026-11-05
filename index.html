@@ -468,6 +468,7 @@ let practicalCur = 0;
 let practicalAnswers = [];
 let practicalShowAnswer = false;
 let practicalUserInput = [];
+let inProgress = {}; // lvl -> snapshot of an exited, unfinished block/practical run
 let currentSpeakText = null;
 let certPrefs = { name: '', lang: 'ru' };
 try {
@@ -500,7 +501,7 @@ function saveProgress() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
       screen, stageIdx, cur, answered, userAns, allResults, certLevel,
-      practicalCur, practicalAnswers, practicalShowAnswer, practicalUserInput
+      practicalCur, practicalAnswers, practicalShowAnswer, practicalUserInput, inProgress
     }));
   } catch (e) { /* storage unavailable - progress just won't persist */ }
 }
@@ -518,6 +519,7 @@ function loadProgress() {
     practicalCur = s.practicalCur || 0; practicalAnswers = s.practicalAnswers || [];
     practicalShowAnswer = !!s.practicalShowAnswer;
     practicalUserInput = s.practicalUserInput || [];
+    inProgress = s.inProgress || {};
     return true;
   } catch (e) { return false; }
 }
@@ -594,13 +596,17 @@ function renderPicker() {
     const reviewBtn = r
       ? `<button class="btn-outline" onclick="viewCertificate('${lvl}')">${isCertEligible(lvl) ? 'Сертификат' : 'Результат'}</button>`
       : '';
+    const resumeBtn = inProgress[lvl]
+      ? `<button class="btn-primary" onclick="resumeLevel('${lvl}')">Продолжить →</button>`
+      : `<button class="btn-primary" onclick="selectLevel('${lvl}')">${r ? 'Пройти заново' : 'Начать'} →</button>`;
     return `
       <div class="picker-card">
         <div class="picker-level">${lvl}</div>
         <div class="picker-info">${infoHtml}</div>
+        ${inProgress[lvl] ? `<div class="picker-result">Есть незавершённая попытка</div>` : ''}
         <div class="picker-card-actions">
           ${reviewBtn}
-          <button class="btn-primary" onclick="selectLevel('${lvl}')">${r ? 'Пройти заново' : 'Начать'} →</button>
+          ${resumeBtn}
         </div>
       </div>
     `;
@@ -615,8 +621,35 @@ function renderPicker() {
 }
 
 function selectLevel(lvl) {
+  delete inProgress[lvl];
   stageIdx = LEVEL_ORDER.indexOf(lvl);
   renderBanner();
+}
+
+// Leave a question/practical screen for the home picker without losing where
+// we were - the snapshot is restored later by resumeLevel() ("Продолжить").
+function exitToHome() {
+  const lvl = LEVEL_ORDER[stageIdx];
+  if (screen === 'question') {
+    inProgress[lvl] = { screen, cur, answered, userAns };
+  } else if (screen === 'practicalBanner' || screen === 'practical') {
+    inProgress[lvl] = { screen, practicalCur, practicalAnswers, practicalShowAnswer, practicalUserInput };
+  }
+  renderPicker();
+}
+
+function resumeLevel(lvl) {
+  const ip = inProgress[lvl];
+  if (!ip) { selectLevel(lvl); return; }
+  stageIdx = LEVEL_ORDER.indexOf(lvl);
+  screen = ip.screen;
+  cur = ip.cur || 0; answered = ip.answered || []; userAns = ip.userAns || [];
+  practicalCur = ip.practicalCur || 0; practicalAnswers = ip.practicalAnswers || [];
+  practicalShowAnswer = !!ip.practicalShowAnswer; practicalUserInput = ip.practicalUserInput || [];
+  saveProgress();
+  if (screen === 'question') renderQuestion();
+  else if (screen === 'practicalBanner') renderPracticalBanner(lvl);
+  else if (screen === 'practical') renderPracticalQuestion(lvl);
 }
 
 function renderBanner() {
@@ -642,6 +675,7 @@ function renderBanner() {
 function beginBlock() {
   screen = 'question';
   cur = 0; answered = []; userAns = [];
+  delete inProgress[LEVEL_ORDER[stageIdx]];
   saveProgress();
   renderQuestion();
 }
@@ -662,6 +696,7 @@ function renderQuestion() {
   const speakHtml = speakText ? `<div class="speak-row"><button class="speak-btn" id="speakbtn" onclick="speak(currentSpeakText, this)">🔊 Слушать произношение</button></div>` : '';
 
   getApp().innerHTML = `
+    <div class="picker-reset"><button class="link-reset" onclick="exitToHome()">← На главную (прогресс сохранится)</button></div>
     <div class="progress-wrap">
       <div class="progress-top">
         <span class="progress-label">Блок ${LEVEL_ORDER[stageIdx]} · Прогресс</span>
@@ -744,6 +779,7 @@ function finishBlock() {
     .map(i => ({ q: block[i].q, t: block[i].t, your: block[i].o[userAns[i]], right: block[i].o[block[i].a], e: block[i].e }));
 
   allResults[lvl] = { correct, total: block.length, mistakes, date: new Date().toISOString(), practical: null };
+  delete inProgress[lvl];
 
   if (PRACTICAL[lvl]) {
     renderPracticalBanner(lvl);
@@ -761,6 +797,7 @@ function renderPracticalBanner(lvl) {
   renderLevelTrack();
   const items = PRACTICAL[lvl];
   getApp().innerHTML = `
+    <div class="picker-reset"><button class="link-reset" onclick="exitToHome()">← На главную (прогресс сохранится)</button></div>
     <div class="stage-banner">
       <h2>Практическое задание</h2>
       <p>Переведи ${items.length} предложений с русского на французский - без переводчика и словаря. Впиши свой вариант в поле, нажми «Сравнить с эталоном» и честно отметь, справился ли ты.</p>
@@ -825,6 +862,7 @@ function startPractical(lvl) {
   practicalAnswers = [];
   practicalShowAnswer = false;
   practicalUserInput = [];
+  delete inProgress[lvl];
   saveProgress();
   renderPracticalQuestion(lvl);
 }
@@ -839,6 +877,7 @@ function renderPracticalQuestion(lvl) {
   const userText = practicalUserInput[practicalCur] || '';
 
   getApp().innerHTML = `
+    <div class="picker-reset"><button class="link-reset" onclick="exitToHome()">← На главную (прогресс сохранится)</button></div>
     <div class="progress-wrap">
       <div class="progress-top">
         <span class="progress-label">Практическое задание · Перевод</span>
@@ -913,6 +952,7 @@ function finishPractical(lvl) {
   const items = PRACTICAL[lvl];
   const correct = practicalAnswers.filter(Boolean).length;
   allResults[lvl].practical = { correct, total: items.length };
+  delete inProgress[lvl];
   screen = 'certificate';
   certLevel = lvl;
   saveProgress();
@@ -1108,7 +1148,7 @@ function renderCertificate(lvl) {
 }
 
 function restartAll() {
-  stageIdx = 0; cur = 0; answered = []; userAns = []; allResults = {}; certLevel = null;
+  stageIdx = 0; cur = 0; answered = []; userAns = []; allResults = {}; certLevel = null; inProgress = {};
   screen = 'picker';
   clearProgress();
   startApp();
