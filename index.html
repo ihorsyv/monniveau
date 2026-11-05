@@ -172,6 +172,15 @@
   .picker-reset { text-align: center; margin-top: 0.75rem; }
   .link-reset { background: none; border: none; color: var(--muted); font-size: 0.78rem; text-decoration: underline; cursor: pointer; font-family: 'DM Sans', sans-serif; padding: 6px; }
   .add-hint { text-align: center; font-size: 0.72rem; color: var(--muted); margin-top: 1.5rem; line-height: 1.6; }
+  .pract-input { width: 100%; min-height: 70px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; background: var(--card); color: var(--text); box-sizing: border-box; resize: vertical; line-height: 1.5; }
+  .pract-input:disabled { background: var(--bg); color: var(--text); opacity: 1; }
+  .pract-compare { margin-top: 1rem; }
+  .pract-compare-row { margin-bottom: 0.7rem; }
+  .pract-compare-label { font-size: 0.7rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+  .pract-compare-text { font-size: 0.95rem; line-height: 1.6; }
+  .diff-ok { color: var(--correct-border); }
+  .diff-bad { color: var(--wrong-border); text-decoration: line-through; text-decoration-color: var(--wrong-border); }
+  .diff-missing { color: var(--wrong-border); text-decoration: underline dotted; }
   @keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -359,6 +368,7 @@ const PRACTICAL = {
     { ru: "У них нет детей.", fr: "Ils n'ont pas d'enfants." },
     { ru: "Я мою руки.", fr: "Je me lave les mains." },
     { ru: "Они никогда не приходят вовремя.", fr: "Ils n'arrivent jamais à l'heure." },
+    { ru: "В котором часу ты ложишься спать?", fr: "À quelle heure tu te couches ?" },
     { ru: "Каждое утро я встаю в 7, принимаю душ, одеваюсь и сразу иду на работу.", fr: "Chaque matin, je me lève à 7 heures, je prends une douche, je m'habille et je vais directement au travail." },
     { ru: "Мои родители работают на заводе.", fr: "Mes parents travaillent à l'usine." },
     { ru: "Нужно купить хлеба и мяса.", fr: "Il faut acheter du pain et de la viande." },
@@ -457,6 +467,7 @@ let certLevel = null;
 let practicalCur = 0;
 let practicalAnswers = [];
 let practicalShowAnswer = false;
+let practicalUserInput = [];
 let currentSpeakText = null;
 let certPrefs = { name: '', lang: 'ru' };
 try {
@@ -489,7 +500,7 @@ function saveProgress() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
       screen, stageIdx, cur, answered, userAns, allResults, certLevel,
-      practicalCur, practicalAnswers, practicalShowAnswer
+      practicalCur, practicalAnswers, practicalShowAnswer, practicalUserInput
     }));
   } catch (e) { /* storage unavailable - progress just won't persist */ }
 }
@@ -506,6 +517,7 @@ function loadProgress() {
     allResults = s.allResults || {}; certLevel = s.certLevel || null;
     practicalCur = s.practicalCur || 0; practicalAnswers = s.practicalAnswers || [];
     practicalShowAnswer = !!s.practicalShowAnswer;
+    practicalUserInput = s.practicalUserInput || [];
     return true;
   } catch (e) { return false; }
 }
@@ -751,9 +763,58 @@ function renderPracticalBanner(lvl) {
   getApp().innerHTML = `
     <div class="stage-banner">
       <h2>Практическое задание</h2>
-      <p>Переведи ${items.length} предложений с русского на французский - письменно или устно, без переводчика и словаря. После каждого предложения сверь свой вариант с эталонным переводом и честно отметь, справился ли ты.</p>
+      <p>Переведи ${items.length} предложений с русского на французский - без переводчика и словаря. Впиши свой вариант в поле, нажми «Сравнить с эталоном» и честно отметь, справился ли ты.</p>
       <p style="margin-top:0.75rem;">Для сертификата по блоку ${lvl} нужно набрать минимум ${Math.round(GATE[lvl] * 100)}% в тесте и не менее ${Math.round(PRACTICAL_GATE * 100)}% в этом задании.</p>
       <button class="btn-primary" onclick="startPractical('${lvl}')">Начать задание →</button>
+    </div>
+  `;
+}
+
+function normWord(w) {
+  return w.toLowerCase().replace(/^[«»"'".,!?;:()\-]+|[«»"'".,!?;:()\-]+$/g, '');
+}
+
+// Простое пословное сравнение (LCS) твоего варианта с эталоном - подсказка,
+// а не строгая проверка: другой порядок слов или синоним даст "расхождение",
+// хотя перевод может быть вполне правильным. Финальную оценку всё равно
+// ставит сам пользователь кнопками "верно/ошибся".
+function diffWords(a, b) {
+  const na = a.map(normWord), nb = b.map(normWord);
+  const n = na.length, m = nb.length;
+  const dp = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0));
+  for (let i = n - 1; i >= 0; i--) {
+    for (let j = m - 1; j >= 0; j--) {
+      dp[i][j] = na[i] === nb[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    }
+  }
+  const res = [];
+  let i = 0, j = 0;
+  while (i < n && j < m) {
+    if (na[i] === nb[j]) { res.push({ text: a[i], type: 'equal' }); i++; j++; }
+    else if (dp[i + 1][j] >= dp[i][j + 1]) { res.push({ text: a[i], type: 'diff' }); i++; }
+    else { j++; }
+  }
+  while (i < n) { res.push({ text: a[i], type: 'diff' }); i++; }
+  return res;
+}
+
+function renderCompareHtml(userText, refText) {
+  const userWords = userText.trim().split(/\s+/).filter(Boolean);
+  const refWords = refText.trim().split(/\s+/).filter(Boolean);
+  const userDiff = diffWords(userWords, refWords);
+  const refDiff = diffWords(refWords, userWords);
+  const userHtml = userDiff.map(d => `<span class="${d.type === 'equal' ? 'diff-ok' : 'diff-bad'}">${escapeHtml(d.text)}</span>`).join(' ');
+  const refHtml = refDiff.map(d => d.type === 'equal' ? escapeHtml(d.text) : `<span class="diff-missing">${escapeHtml(d.text)}</span>`).join(' ');
+  return `
+    <div class="pract-compare">
+      <div class="pract-compare-row">
+        <div class="pract-compare-label">Твой вариант</div>
+        <div class="pract-compare-text">${userHtml}</div>
+      </div>
+      <div class="pract-compare-row">
+        <div class="pract-compare-label">Эталонный перевод</div>
+        <div class="pract-compare-text">${refHtml}</div>
+      </div>
     </div>
   `;
 }
@@ -763,6 +824,7 @@ function startPractical(lvl) {
   practicalCur = 0;
   practicalAnswers = [];
   practicalShowAnswer = false;
+  practicalUserInput = [];
   saveProgress();
   renderPracticalQuestion(lvl);
 }
@@ -773,6 +835,8 @@ function renderPracticalQuestion(lvl) {
   const item = items[practicalCur];
   const pct = Math.round(practicalCur / items.length * 100);
   const answered_ = practicalAnswers[practicalCur] !== undefined;
+  const revealed = practicalShowAnswer || answered_;
+  const userText = practicalUserInput[practicalCur] || '';
 
   getApp().innerHTML = `
     <div class="progress-wrap">
@@ -788,13 +852,16 @@ function renderPracticalQuestion(lvl) {
         <span class="q-number">№ ${practicalCur + 1}</span>
       </div>
       <div class="q-text">${escapeHtml(item.ru)}</div>
-      ${!practicalShowAnswer && !answered_ ? `
-        <button class="btn-primary" onclick="revealPractical()">Показать эталонный перевод</button>
+      <textarea class="pract-input" id="pracInput" placeholder="Напиши свой перевод на французский..." oninput="updatePracticalInput(this.value)" ${revealed ? 'disabled' : ''}>${escapeHtml(userText)}</textarea>
+      ${!revealed ? `
+        <button class="btn-primary" style="margin-top:12px;" onclick="revealPractical()">Сравнить с эталоном</button>
       ` : `
-        <div class="explanation show">
-          <div class="exp-label">Эталонный перевод</div>
-          ${escapeHtml(item.fr)}
-        </div>
+        ${userText.trim() ? renderCompareHtml(userText, item.fr) : `
+          <div class="explanation show">
+            <div class="exp-label">Эталонный перевод</div>
+            ${escapeHtml(item.fr)}
+          </div>
+        `}
         <div class="options" style="margin-top:12px;">
           <button class="opt ${answered_ ? 'disabled' : ''} ${practicalAnswers[practicalCur] === true ? 'correct' : ''}" onclick="markPractical(true,'${lvl}')">
             <span class="opt-letter">✓</span><span>Я перевёл(а) верно</span>
@@ -811,6 +878,11 @@ function renderPracticalQuestion(lvl) {
       </button>
     </div>
   `;
+}
+
+function updatePracticalInput(value) {
+  practicalUserInput[practicalCur] = value;
+  saveProgress();
 }
 
 function revealPractical() {
