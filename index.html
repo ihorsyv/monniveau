@@ -1111,7 +1111,7 @@ function renderCertificate(lvl) {
         ${practicalDone ? `<div class="stat-pill"><div class="val">${practicalPct}%</div><div class="lbl">практика</div></div>` : ''}
       </div>
       <div class="cert-date">Для сертификата нужно: тест ≥ ${Math.round(GATE[lvl] * 100)}%${hasPractical ? ` и практическое задание ≥ ${Math.round(PRACTICAL_GATE * 100)}%` : ''}.</div>
-      ${testPassed && hasPractical && !practicalDone ? `<div style="margin-top:1rem;"><button class="btn-primary" onclick="renderPracticalBanner('${lvl}')">Начать практическое задание →</button></div>` : ''}
+      ${testPassed && hasPractical && !practicalDone ? `<div style="margin-top:1rem;"><button class="btn-primary" onclick="${inProgress[lvl] ? `resumeLevel('${lvl}')` : `renderPracticalBanner('${lvl}')`}">${inProgress[lvl] ? 'Продолжить практическое задание →' : 'Начать практическое задание →'}</button></div>` : ''}
       ${testPassed && hasPractical && practicalDone && !practicalPassed ? `<div style="margin-top:1rem;"><button class="btn-primary" onclick="startPractical('${lvl}')">Повторить практическое задание →</button></div>` : ''}
     </div>
   `;
