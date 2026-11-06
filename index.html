@@ -82,6 +82,7 @@
   .tr-row { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); font-style: italic; color: var(--text); }
   .tr-label { font-size: 0.7rem; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; font-style: normal; }
   .speak-row { margin-top: 10px; }
+  .cefr-quote { margin-top: 0.9rem; padding: 10px 14px; background: var(--card); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-size: 0.8rem; line-height: 1.6; color: var(--muted); font-style: italic; text-align: left; }
   .speak-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 20px; border: 1px solid var(--accent); background: var(--accent-light); color: var(--accent); font-size: 0.8rem; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
   .speak-btn:hover { background: var(--accent); color: white; }
   .speak-btn:disabled { opacity: 0.45; cursor: default; }
@@ -261,7 +262,12 @@ const BLOCKS = {
     { q: "Как будет 80 по-французски?", o: ["huitante","octante","quatre-vingts","quatre-vingts-zéro"], a: 2, t: "Числительные", e: "80 = quatre-vingts." },
     { q: "Который час: «Il est midi et demi» ?", o: ["12:00","12:15","12:30","11:30"], a: 2, t: "Время", e: "Midi et demi = 12:30.", tr: "Сейчас половина первого (12:30)." },
     { q: "«Avant-hier» - это:", o: ["вчера","позавчера","завтра","послезавтра"], a: 1, t: "Время", e: "Avant-hier = позавчера." },
-    { q: "Выбери правильное приветствие вечером:", o: ["Bonjour !","Bonsoir !","Bonne nuit !","Salut le matin !"], a: 1, t: "Лексика", e: "Bonsoir = добрый вечер.", tr: "Добрый вечер!" }
+    { q: "Выбери правильное приветствие вечером:", o: ["Bonjour !","Bonsoir !","Bonne nuit !","Salut le matin !"], a: 1, t: "Лексика", e: "Bonsoir = добрый вечер.", tr: "Добрый вечер!" },
+    { q: "Прослушай фразу и выбери перевод.", listen: "Bonjour, comment ça va ?", o: ["Добрый вечер, как дела?","Привет, как дела?","До свидания, как дела?","Привет, сколько тебе лет?"], a: 1, t: "Аудирование", e: "Bonjour = привет/добрый день, comment ça va ? = как дела?" },
+    { q: "Прослушай фразу и выбери перевод.", listen: "Il est trois heures et quart.", o: ["Три часа без четверти","Половина четвёртого","Три часа пятнадцать минут","Четыре часа"], a: 2, t: "Аудирование", e: "Et quart = и четверть, т.е. +15 минут." },
+    { q: "Прослушай фразу и выбери перевод.", listen: "J'ai vingt-cinq ans.", o: ["Мне двадцать пять лет","Мне пятнадцать лет","Мне двадцать лет","Мне пятьдесят лет"], a: 0, t: "Аудирование", e: "Vingt-cinq = 25." },
+    { q: "Прослушай фразу и выбери перевод.", listen: "Je voudrais un café, s'il vous plaît.", o: ["Я хочу чай, пожалуйста","Я хочу кофе, пожалуйста","У меня нет кофе","Дайте мне, пожалуйста, воду"], a: 1, t: "Аудирование", e: "Je voudrais = я хотел(а) бы (вежливая форма)." },
+    { q: "Прослушай фразу и выбери перевод.", listen: "Où est la gare, s'il vous plaît ?", o: ["Где аптека, пожалуйста?","Где вокзал, пожалуйста?","Сколько стоит билет?","Где находится отель?"], a: 1, t: "Аудирование", e: "La gare = вокзал." }
   ],
   A2: [
     { q: "Elle ___ arrivée hier soir.", o: ["a","est","avait","soit"], a: 1, t: "Passé composé", e: "Глаголы движения → être.", tr: "Она приехала вчера вечером." },
@@ -304,7 +310,12 @@ const BLOCKS = {
     { q: "«Actuellement» по-французски - это:", o: ["в действительности","в данный момент","на самом деле","активно"], a: 1, t: "Faux amis", e: "Actuellement = сейчас." },
     { q: "«Éventuellement» означает:", o: ["в конце концов","возможно, может быть","наконец","в случае необходимости"], a: 1, t: "Faux amis", e: "Éventuellement = возможно." },
     { q: "J'habite ici ___ trois ans.", o: ["il y a","dans","depuis","pendant"], a: 2, t: "Prépositions de temps", e: "Depuis - действие продолжается.", tr: "Я живу здесь уже три года." },
-    { q: "Il a appelé ___ dix minutes.", o: ["depuis","pendant","il y a","dans"], a: 2, t: "Prépositions de temps", e: "Il y a = тому назад.", tr: "Он позвонил десять минут назад." }
+    { q: "Il a appelé ___ dix minutes.", o: ["depuis","pendant","il y a","dans"], a: 2, t: "Prépositions de temps", e: "Il y a = тому назад.", tr: "Он позвонил десять минут назад." },
+    { q: "Прослушай фразу и выбери перевод.", listen: "Je suis allé au marché hier matin.", o: ["Я пойду на рынок завтра утром","Я был на рынке вчера утром","Я иду на рынок сейчас","Я был в магазине вчера вечером"], a: 1, t: "Аудирование", e: "Passé composé + hier matin = вчера утром." },
+    { q: "Прослушай фразу и выбери перевод.", listen: "Elle a oublié son parapluie à la maison.", o: ["Она забыла зонт дома","Она купила новый зонт","Она потеряла ключи от дома","Она забыла телефон в машине"], a: 0, t: "Аудирование", e: "Oublier = забыть, parapluie = зонт." },
+    { q: "Прослушай фразу и выбери перевод.", listen: "Nous devons partir dans dix minutes.", o: ["Мы должны выйти через десять минут","Мы ушли десять минут назад","Мы приехали десять минут назад","Нам нужно подождать десять минут"], a: 0, t: "Аудирование", e: "Dans + время = через (в будущем)." },
+    { q: "Прослушай фразу и выбери перевод.", listen: "Il fait très froid aujourd'hui, n'oublie pas ton manteau.", o: ["Сегодня очень жарко, не забудь очки","Сегодня очень холодно, не забудь пальто","Завтра будет холодно, возьми шарф","Сегодня дождливо, возьми зонт"], a: 1, t: "Аудирование", e: "Il fait froid = холодно, manteau = пальто." },
+    { q: "Прослушай фразу и выбери перевод.", listen: "Si j'avais plus de temps, je voyagerais davantage.", o: ["Если бы у меня было больше времени, я бы больше путешествовал","У меня было много времени для путешествий","Я путешествую, когда у меня есть время","Я бы хотел путешествовать, но нет денег"], a: 0, t: "Аудирование", e: "Si + imparfait → conditionnel présent." }
   ],
   B1: [
     { q: "Quand je suis arrivé, elle ___ déjà partie.", o: ["est partie","était partie","a parti","avait parti"], a: 1, t: "Plus-que-parfait", e: "Действие раньше другого прошедшего → plus-que-parfait.", tr: "Когда я пришёл, она уже ушла." },
@@ -346,7 +357,12 @@ const BLOCKS = {
     { q: "Elle ___ de son mieux pour t'aider.", o: ["fait","a fait","fera","faisait"], a: 0, t: "Expressions idiomatiques", e: "Faire de son mieux - présent.", tr: "Она старается изо всех сил, чтобы тебе помочь." },
     { q: "La ville ___ je t'ai parlé est magnifique.", o: ["que","qui","dont","où"], a: 2, t: "Pronoms relatifs", e: "Parler de → dont.", tr: "Город, о котором я тебе рассказывал(а), великолепен." },
     { q: "C'est l'homme ___ la femme est médecin.", o: ["que","qui","dont","où"], a: 2, t: "Pronoms relatifs", e: "Dont = принадлежность.", tr: "Это мужчина, чья жена врач." },
-    { q: "«Tant que tu travailles, tu progresseras» - «tant que» означает:", o: ["так как","пока / при условии что","поэтому","хотя"], a: 1, t: "Conjonctions", e: "Tant que = пока / до тех пор пока.", tr: "Пока ты работаешь, ты будешь прогрессировать." }
+    { q: "«Tant que tu travailles, tu progresseras» - «tant que» означает:", o: ["так как","пока / при условии что","поэтому","хотя"], a: 1, t: "Conjonctions", e: "Tant que = пока / до тех пор пока.", tr: "Пока ты работаешь, ты будешь прогрессировать." },
+    { q: "Прослушай фразу и выбери перевод.", listen: "Il m'a dit qu'il avait déjà vu ce film.", o: ["Он сказал мне, что ещё не видел этот фильм","Он сказал мне, что уже видел этот фильм","Он спросил меня, видел ли я этот фильм","Он сказал, что хочет посмотреть этот фильм"], a: 1, t: "Аудирование", e: "Discours indirect: passé composé → plus-que-parfait." },
+    { q: "Прослушай фразу и выбери перевод.", listen: "Si j'avais su, je serais venu te voir plus tôt.", o: ["Если бы я знал, я бы пришёл к тебе раньше","Я не знал, что ты придёшь раньше","Я приду к тебе, если узнаю раньше","Я пришёл к тебе, потому что знал"], a: 0, t: "Аудирование", e: "Si + plus-que-parfait → conditionnel passé." },
+    { q: "Прослушай фразу и выбери перевод.", listen: "Elle ne parle que le français au bureau.", o: ["Она никогда не говорит по-французски в офисе","Она говорит только по-французски в офисе","Она больше не говорит по-французски","Она изучает французский в офисе"], a: 1, t: "Аудирование", e: "Ne...que = только." },
+    { q: "Прослушай фразу и выбери перевод.", listen: "Je n'ai jamais rien vu d'aussi beau.", o: ["Я никогда не видел ничего настолько красивого","Я видел что-то очень красивое","Я никогда не видел ничего плохого","Я часто вижу красивые вещи"], a: 0, t: "Аудирование", e: "Двойное отрицание: ne...jamais...rien." },
+    { q: "Прослушай фразу и выбери перевод.", listen: "Nous cherchons à comprendre la situation avant de décider.", o: ["Мы уже понимаем ситуацию и готовы решить","Мы пытаемся понять ситуацию, прежде чем решить","Мы решили, не понимая ситуацию","Мы не хотим понимать ситуацию"], a: 1, t: "Аудирование", e: "Chercher à + infinitif = пытаться." }
   ]
 };
 
@@ -386,10 +402,31 @@ const PRACTICAL_GATE = 0.8;
 
 const LEVEL_ORDER = ['A1','A2','B1'];
 const GATE = { A1: 0.8, A2: 0.5, B1: 0.5 };
+// Below this share of correct answers the result reads as "level not reached yet"
+// rather than "almost there" - mirrors the graded (not pass/fail) scoring used by
+// standard CEFR placement tests.
+const LOW_SHARE = 0.4;
 const LEVEL_MESSAGES = {
-  A1: { pass: 'Базовый уровень освоен уверенно.', fail: 'Основы être/avoir, артикли и базовая лексика пока плавают. Стоит закрепить фундамент A1 и попробовать ещё раз.' },
-  A2: { pass: 'Уверенно владеешь A2. Можно двигаться к B1.', fail: 'A2 (passé composé, местоимения y/en/lui/leur, gérondif) пока даётся с трудом - разбери ошибки ниже и попробуй снова.' },
-  B1: { pass: 'B1 пройден уверенно. Готов двигаться к B2.', fail: 'B1 (plus-que-parfait, conditionnel passé, discours indirect) - зона роста. Разбери ошибки ниже и попробуй ещё раз.' }
+  A1: {
+    pass: 'Базовый уровень освоен уверенно.',
+    mid: 'Основы être/avoir, артикли и базовая лексика пока плавают. Стоит закрепить фундамент A1 и попробовать ещё раз.',
+    low: 'Уровня A1 пока нет - большая часть базовой грамматики и лексики не закрепилась. Начни с азов (être/avoir, простые фразы) и возвращайся к тесту позже.'
+  },
+  A2: {
+    pass: 'Уверенно владеешь A2. Можно двигаться к B1.',
+    mid: 'A2 (passé composé, местоимения y/en/lui/leur, gérondif) пока даётся с трудом - разбери ошибки ниже и попробуй снова.',
+    low: 'Уровень A2 пока рановато сдавать - сначала закрепи passé composé и базовые местоимения, а лучше ещё раз пройди блок A1.'
+  },
+  B1: {
+    pass: 'B1 пройден уверенно. Готов двигаться к B2.',
+    mid: 'B1 (plus-que-parfait, conditionnel passé, discours indirect) - зона роста. Разбери ошибки ниже и попробуй ещё раз.',
+    low: 'Уровень B1 пока рановато сдавать - вернись к A2 (passé composé, местоимения, сравнение) и закрепи материал.'
+  }
+};
+const LEVEL_CEFR = {
+  A1: '«Я понимаю и могу использовать привычные повседневные выражения и простые фразы, нужные для удовлетворения конкретных потребностей. Могу представиться, задать собеседнику простые вопросы о нём и ответить на такие же вопросы.»',
+  A2: '«Я понимаю отдельные фразы и часто употребляемые выражения, связанные с важными темами (сведения о себе и семье, покупки, учёба, работа). Могу выполнить простые задачи, связанные с прямым обменом информацией на знакомые темы.»',
+  B1: '«Я понимаю основные идеи сообщений на чёткие, стандартные темы - работа, учёба, отдых. Могу общаться в большинстве ситуаций, возникающих во время путешествия. Могу рассказать о событии, своих впечатлениях.»'
 };
 
 const L = ['A','B','C','D'];
@@ -657,16 +694,18 @@ function renderBanner() {
   saveProgress();
   renderLevelTrack();
   const lvl = LEVEL_ORDER[stageIdx];
+  const total = currentBlock().length;
   const intro = {
-    A1: "Базовый уровень. 40 вопросов: être/avoir, артикли, отрицание, глаголы, aller, вопросительные слова, предлоги места, faux amis, числа, время. После теста - дополнительное практическое задание на перевод. Для сертификата нужно 32/40 (80%) в тесте и не менее 80% в практическом задании.",
-    A2: "Уровень A2. 40 вопросов: passé composé, согласование participe, imparfait, местоимения y/en/lui/leur, gérondif, сравнение, relatifs, conditionnel, futur, faux amis, предлоги времени.",
-    B1: "Уровень B1. 40 вопросов: plus-que-parfait, conditionnel passé, discours indirect, gérondif/participe présent, négation, предлоги времени, порядок местоимений, согласование participe, superlatif, faux amis, глаголы с предлогами, relatifs."
+    A1: `Базовый уровень. ${total} вопросов: être/avoir, артикли, отрицание, глаголы, aller, вопросительные слова, предлоги места, faux amis, числа, время, а также блок аудирования. После теста - дополнительное практическое задание на перевод. Для сертификата нужно 80% в тесте и не менее 80% в практическом задании.`,
+    A2: `Уровень A2. ${total} вопросов: passé composé, согласование participe, imparfait, местоимения y/en/lui/leur, gérondif, сравнение, relatifs, conditionnel, futur, faux amis, предлоги времени, а также блок аудирования.`,
+    B1: `Уровень B1. ${total} вопросов: plus-que-parfait, conditionnel passé, discours indirect, gérondif/participe présent, négation, предлоги времени, порядок местоимений, согласование participe, superlatif, faux amis, глаголы с предлогами, relatifs, а также блок аудирования.`
   };
   getApp().innerHTML = `
     <div class="stage-banner">
       <h2>Блок ${lvl}</h2>
       <p>${intro[lvl]}</p>
-      <button class="btn-primary" onclick="beginBlock()">Начать блок →</button>
+      <div class="cefr-quote">${LEVEL_CEFR[lvl]}</div>
+      <button class="btn-primary" style="margin-top:1rem;" onclick="beginBlock()">Начать блок →</button>
     </div>
     <div class="picker-reset"><button class="link-reset" onclick="renderPicker()">← Выбрать другой блок</button></div>
   `;
@@ -690,10 +729,14 @@ function renderQuestion() {
   const correct = userAns.filter((u,i) => u === block[i].a).length;
   const wrong = cur - correct;
 
-  const speakText = speakTextFor(q);
+  const isListen = !!q.listen;
+  const speakText = isListen ? q.listen : speakTextFor(q);
   currentSpeakText = speakText;
-  const trHtml = q.tr ? `<div class="tr-row"><div class="tr-label">Перевод</div>${q.tr}</div>` : '';
-  const speakHtml = speakText ? `<div class="speak-row"><button class="speak-btn" id="speakbtn" onclick="speak(currentSpeakText, this)">🔊 Слушать произношение</button></div>` : '';
+  const trHtml = isListen
+    ? `<div class="tr-row"><div class="tr-label">Текст на французском</div>${q.listen}</div>`
+    : (q.tr ? `<div class="tr-row"><div class="tr-label">Перевод</div>${q.tr}</div>` : '');
+  const speakHtml = speakText ? `<div class="speak-row"><button class="speak-btn" id="speakbtn" onclick="speak(currentSpeakText, this)">🔊 ${isListen ? 'Прослушать снова' : 'Слушать произношение'}</button></div>` : '';
+  const listenBtnHtml = isListen ? `<div class="speak-row" style="margin-bottom:1.2rem;"><button class="speak-btn" id="listenbtn" onclick="speak(currentSpeakText, this)">🔊 Слушать фразу</button></div>` : '';
 
   getApp().innerHTML = `
     <div class="picker-reset"><button class="link-reset" onclick="exitToHome()">← На главную (прогресс сохранится)</button></div>
@@ -715,6 +758,7 @@ function renderQuestion() {
         <span class="q-number">№ ${cur + 1}</span>
       </div>
       <div class="q-text">${q.q}</div>
+      ${listenBtnHtml}
       <div class="options">
         ${q.o.map((opt, i) => `
           <button class="opt" id="opt${i}" onclick="choose(${i})">
@@ -1043,7 +1087,7 @@ function renderCertificate(lvl) {
   const practicalPct = practicalDone ? Math.round(r.practical.correct / r.practical.total * 100) : null;
   const practicalPassed = !hasPractical || (practicalDone && r.practical.correct / r.practical.total >= PRACTICAL_GATE);
   const passed = testPassed && practicalPassed;
-  const msg = testPassed ? LEVEL_MESSAGES[lvl].pass : LEVEL_MESSAGES[lvl].fail;
+  const msg = testPassed ? LEVEL_MESSAGES[lvl].pass : (share >= LOW_SHARE ? LEVEL_MESSAGES[lvl].mid : LEVEL_MESSAGES[lvl].low);
   const nextIdx = LEVEL_ORDER.indexOf(lvl) + 1;
   const nextLvl = LEVEL_ORDER[nextIdx];
   const topics = uniqueTopics(BLOCKS[lvl]);
